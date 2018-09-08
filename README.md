@@ -13,6 +13,8 @@ Hopefully my contribution will be some Documentum specfic install exampls
 - https://www.vagrantup.com/docs/provisioning/ansible_local.html
 - https://www.vagrantup.com/docs/provisioning/ansible.html
 - https://www.vagrantup.com/docs/provisioning/ansible_intro.html
+- https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
+- https://everythingshouldbevirtual.com/automation/ansible-using-set_facts-module/
 
 #### Ben's IT Lessons - Ansible - A Beginner's Tutorial
 - https://www.youtube.com/watch?v=icR-df2Olm8&t=482s
@@ -26,8 +28,10 @@ Hopefully my contribution will be some Documentum specfic install exampls
 - https://github.com/scottslowe/learning-tools/blob/master/vagrant/complex-yaml/Vagrantfile
 - https://github.com/scottslowe/learning-tools/blob/master/vagrant/complex-yaml/machines.yml
 
-### LINUX file system... follow well proven standards
+### LINUX 
+file system... follow well proven standards
 - https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard
+- https://linoxide.com/how-tos/change-linux-shell-prompt-with-different-colors/
 
 ### Oracle
 #### Oracle XE
@@ -43,3 +47,5 @@ Hopefully my contribution will be some Documentum specfic install exampls
 
 ### Ruby
 - https://alvinalexander.com/blog/post/ruby/how-write-text-to-file-ruby-example
+
+##

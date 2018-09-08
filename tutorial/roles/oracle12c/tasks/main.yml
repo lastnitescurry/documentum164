@@ -91,3 +91,51 @@
     owner: oracle
     group: oinstall
     mode: u=rwx,g=rx,o=rx
+
+- name: Oracle 12c software dir
+  file: 
+    path: "{{ oracle_software_unpack_dir }}"
+    state: directory
+    recurse: yes
+    owner: oracle
+    group: oinstall
+    mode: u=rwx,g=rx,o=rx
+
+# https://docs.ansible.com/ansible/latest/user_guide/playbooks_blocks.html
+# https://docs.ansible.com/ansible/latest/modules/unarchive_module.html#unarchive-module
+- name: Unpack Oracle media
+  unarchive:
+    src:        "{{ item.zip }}" 
+    creates:    "{{ item.creates }}" 
+    dest:       /tmp
+    remote_src: yes
+    owner: oracle
+    group: oinstall
+  loop:
+    - { zip: '{{ oracle_media1 }}', creates: '/tmp/database/welcome.html' }
+    - { zip: '{{ oracle_media2 }}', creates: '/tmp/database/stage/Components/oracle.ctx' }
+
+- name: To perform silent installation  we must create oraInst.loc
+  template: 
+    dest: /etc/oraInst.loc
+    src: ../files/oraInst.loc
+    owner: oracle
+    group: oinstall
+    mode: 644
+
+- name: To perform silent installation  we must create response file.
+  template: 
+    dest: "/tmp/db_install.rsp"
+    src: ../files/db_install.rsp
+    owner: oracle
+    group: oinstall
+    mode: u=rw,g=r,o=r
+
+
+- name: Run the Oracle 12c installer
+  shell: /tmp/database/runInstaller -silent -responseFile /tmp/db_install.rsp 
+  args:
+    chdir: /tmp/database
+#    creates: somelog.txt
+  become: true
+  become_user: oracle

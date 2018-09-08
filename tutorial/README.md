@@ -66,4 +66,10 @@ To get started following: Ansible - A Beginner's Tutorial
     
 ##### Run
     ansible-playbook playbook.yml
+
+### Oracle 12c
+##### Manual to get correct parameters
+    cd /tmp/database/
+    /tmp/database/runInstaller -silent -responseFile /tmp/db_install.rsp
     
+    rm -rf /tmp/OraInstall*

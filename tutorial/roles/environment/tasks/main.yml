@@ -10,10 +10,14 @@
     oracle_version: 12.1.0.2
     oracle_sid:     fgdb
     oracle_unqname: fgdb
+    oracle_software_unpack_dir: "/tmp/oracle"
+    oracle_media1: "/media/software/Oracle/Database/linuxamd64_12102_database_1of2.zip"
+    oracle_media2: "/media/software/Oracle/Database/linuxamd64_12102_database_2of2.zip"
 
 - name: Define Oracle 12c home
   set_fact:
-    oracle_home:    "{{ oracle_base }}/product/{{ oracle_version }}/{{ oracle_unqname }}"
+    oracle_home:      "{{ oracle_base }}/product/{{ oracle_version }}/{{ oracle_unqname }}"
+    oracle_inventory: "{{ oracle_base }}/oraInventory"
     cacheable: true
 
 - name: Report hostname variables
