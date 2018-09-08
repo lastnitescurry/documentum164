@@ -67,13 +67,3 @@ To get started following: Ansible - A Beginner's Tutorial
 ##### Run
     ansible-playbook playbook.yml
     
-
-{{ hostvars['database']['ansible_eth0']['ipv4']['address']}}    
-
-- template: Something useful from tutorial
-    src: |
-      This host is: {{ hostvars['database']['ansible_eth0']['ipv4']['address']}}    
-    dest: /home/oracle/echo.ansible.variable.test.txt
-    owner: oracle
-    group: oinstall
-    mode: u=rw,g=r,o=r

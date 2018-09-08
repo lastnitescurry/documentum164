@@ -1,0 +1,3 @@
+---
+- name: set-passord-brian
+  shell: echo vagrant|passwd --stdin brian

@@ -16,12 +16,14 @@
 - name: Create account for myself
   user:
     name: brian
+  notify:
+    - set-passord-brian
 
 # https://docs.ansible.com/ansible/latest/modules/copy_module.html#copy-module
-- name: Create a bashrc file for user brian
+- name: Add date and time to prompt
   copy:
-    src: ../../files/bashrc.sh
-    dest: /home/brian/.bashrc
-    owner: brian
-    group: 1001
+    src: ../files/time_prompt.sh
+    dest: /etc/profile.d/time_prompt.sh
+    owner: root
+    group: root
     mode: u=rw,g=r,o=r

@@ -53,14 +53,9 @@
   notify:
     - set-passord-oracle
     
-# https://docs.ansible.com/ansible/latest/modules/copy_module.html#copy-module
-- name: Oracle 12c install account bashrc file
-  copy:
-    src: ../../files/bashrc.sh
-    dest: /home/oracle/.bashrc
-    owner: oracle
-    group: oinstall
-    mode: u=rw,g=r,o=r
+- name: Report Oracle 12c home
+  debug:
+    msg: "Oracle Home: {{ oracle_home }}"
 
 - name: Oracle 12c environment variables bashrc file 
   template: 
@@ -87,10 +82,6 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
-
-- name: Report Oracle 12c home
-  debug:
-    msg: "Oracle Home: {{ oracle_home }}"
 
 - name: Oracle 12c install location
   file: 

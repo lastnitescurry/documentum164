@@ -1,19 +1,5 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-echo "$(date) - bashrc - vagrant - user"
-
-echo "$(date) - bashrc - oracle - configure"
-if [ -f /u01/app/oracle/product/11.2.0/xe/bin/oracle_env.sh ]; then
-  . /u01/app/oracle/product/11.2.0/xe/bin/oracle_env.sh
-#  alias sqlm='$ORACLE_HOME/bin/sqlplus system/vagrant@$ORACLE_SID'
-  alias sqlm='$ORACLE_HOME/bin/sqlplus system/vagrant'
-  alias sqld='$ORACLE_HOME/bin/sqlplus sys as sysdba'
-  alias xe_status='sudo /etc/init.d/oracle-xe status'
-  alias xe_start='/etc/init.d/oracle-xe start'
-  alias xe_stop='/etc/init.d/oracle-xe stop'
-  echo "$(date) - bashrc - oracle - configured"
-fi
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
