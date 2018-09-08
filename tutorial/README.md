@@ -1,9 +1,10 @@
 
 To get started following: Ansible - A Beginner's Tutorial
 
-- https://www.youtube.com/watch?v=icR-df2Olm8&t=482s
+- https://www.youtube.com/watch?v=icR-df2Olm8
 - https://www.youtube.com/watch?v=pRZA9ymZXn0
 - https://www.youtube.com/watch?v=jBiueVhDg1Q
+- https://www.youtube.com/watch?v=aeGDc7rCK_0
 
 ### SSH
 #### Generate
@@ -44,6 +45,10 @@ To get started following: Ansible - A Beginner's Tutorial
     cd /vagrant/tutorial/
     mkdir -p roles/basic/tasks
     touch roles/basic/tasks/main.yml
+    touch playbook.yml
+
+    mkdir -p roles/environment/tasks
+    touch roles/environment/tasks/main.yml
     touch playbook.yml
     
 ##### Run

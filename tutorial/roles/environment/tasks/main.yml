@@ -1,0 +1,25 @@
+---
+# https://everythingshouldbevirtual.com/automation/ansible-using-set_facts-module/
+# https://gist.github.com/halberom/e02b1d644d54352820e8
+# https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
+# https://docs.ansible.com/ansible/latest/modules/set_fact_module.html#set-fact-module
+
+- name: Define Oracle 12c variables
+  set_fact:
+    oracle_base:    "/opt/oracle"
+    oracle_version: 12.1.0.2
+    oracle_sid:     fgdb
+    oracle_unqname: fgdb
+
+- name: Define Oracle 12c home
+  set_fact:
+    oracle_home:    "{{ oracle_base }}/product/{{ oracle_version }}/{{ oracle_unqname }}"
+    cacheable: true
+
+- name: Report hostname variables
+  debug:
+    msg: System {{ ansible_hostname }} is also called {{ inventory_hostname }} has uuid {{ ansible_product_uuid }}
+
+- name: Report Oracle 12c home
+  debug:
+    msg: "Oracle Home: {{ oracle_home }}"

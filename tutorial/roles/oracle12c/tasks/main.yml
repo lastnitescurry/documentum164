@@ -1,6 +1,7 @@
 ---
-# https://docs.ansible.com/ansible/latest/modules/yum_module.html
 # https://www.tecmint.com/install-oracle-database-12c-on-centos-7/
+# https://valehagayev.wordpress.com/2016/09/08/oracle-12-1-0-2-silent-install-and-de-installation-on-oel/
+
 - name: Oracle 12c required packages
   yum: 
     name:  "{{ packages }}"
@@ -61,3 +62,41 @@
     group: oinstall
     mode: u=rw,g=r,o=r
 
+- name: Oracle 12c environment variables bashrc file 
+  template: 
+    dest: /etc/profile.d/oracle.sh
+    src: ../files/environment.exports.sh
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Oracle 12c kernel parameters
+  copy:
+    src: ../files/kernel.sysctl.conf
+    dest: /etc/sysctl.d/oracle12c.conf
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  notify:
+    - apply-kernel-parameters
+
+- name: Oracle 12c security limits
+  copy:
+    src: ../files/security.limits.conf
+    dest: /etc/security/limits.d/oracle12c.conf
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Report Oracle 12c home
+  debug:
+    msg: "Oracle Home: {{ oracle_home }}"
+
+- name: Oracle 12c install location
+  file: 
+    path: "{{ oracle_home }}"
+    state: directory
+    recurse: yes
+    owner: oracle
+    group: oinstall
+    mode: u=rwx,g=rx,o=rx
