@@ -1,0 +1,48 @@
+---
+- name: database
+  box:  lastnitescurry/centos7
+  desc: Oracle 12c Database Server
+  ram:  4096
+  ip:   192.168.100.10
+  network: private_network
+  synced_folder:
+    software:
+       local:   D:/Software
+       remote:  /media/software
+
+- name: documentum
+  box:  lastnitescurry/centos7
+  desc: Documentum 16.4 Server
+  ram:  4096
+  ip:   192.168.100.20
+  network: private_network
+  synced_folder:
+    software:
+       local:   D:/Software
+       remote:  /media/software
+
+- name: applications
+  box:  lastnitescurry/centos7
+  desc: Application Server
+  ip:   192.168.100.30
+  network: private_network
+  synced_folder:
+    software:
+       local:   D:/Software
+       remote:  /media/software
+
+- name: ansible
+  box:  lastnitescurry/centos7
+  ram:  1024
+  vram: 128
+  cpus: 2
+  desc: Ansible Master of slaves
+  ip:   192.168.100.90
+  network: private_network
+  synced_folder:
+    software:
+       local:   D:/Software
+       remote:  /media/software
+  provision_shell:
+    ssh-keygen:
+      inline:   ssh-keygen -q -t ecdsa -b 521 -f ~/.ssh/id_ecdsa -N ""
