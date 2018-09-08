@@ -51,3 +51,7 @@ build-iPhoneSimulator/
 
 # Vagrant
 .vagrant
+
+# Backups
+*- Copy*
+*.bak*
