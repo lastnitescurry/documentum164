@@ -3,3 +3,8 @@
   become: true
   roles:
   - basic
+
+- hosts: database
+  become: true
+  roles:
+  - oracle12c

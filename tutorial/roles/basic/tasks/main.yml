@@ -20,7 +20,7 @@
 # https://docs.ansible.com/ansible/latest/modules/copy_module.html#copy-module
 - name: Create a bashrc file for user brian
   copy:
-    src: ../files/bashrc.sh
+    src: ../../files/bashrc.sh
     dest: /home/brian/.bashrc
     owner: brian
     group: 1001

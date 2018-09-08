@@ -49,6 +49,26 @@ To get started following: Ansible - A Beginner's Tutorial
 ##### Run
     ansible-playbook playbook.yml
 
+### Ansible - Oracle 12c
+##### Setup
+
+    cd /vagrant/tutorial/
+    mkdir -p roles/oracle12c/tasks
+    touch roles/oracle12c/tasks/main.yml
+    mkdir -p roles/oracle12c/handlers
+    touch roles/oracle12c/handlers/main.yml
     
-- https://docs.ansible.com/ansible/latest/modules/yum_module.html
     
+##### Run
+    ansible-playbook playbook.yml
+    
+
+{{ hostvars['database']['ansible_eth0']['ipv4']['address']}}    
+
+- template: Something useful from tutorial
+    src: |
+      This host is: {{ hostvars['database']['ansible_eth0']['ipv4']['address']}}    
+    dest: /home/oracle/echo.ansible.variable.test.txt
+    owner: oracle
+    group: oinstall
+    mode: u=rw,g=r,o=r
