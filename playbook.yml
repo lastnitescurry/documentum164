@@ -8,10 +8,12 @@
 - hosts: database
   become: true
   roles:
+  - oracle_common
   - oracle_server
 
 - hosts: documentum
   become: true
   roles:
+  - oracle_common
   - oracle_client
   - documentum_server

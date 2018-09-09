@@ -1,7 +1,4 @@
 ---
-- name: set-passord-oracle
-  shell: echo vagrant|passwd --stdin oracle
-
 - name: apply-kernel-parameters
   shell: |
     sysctl -p

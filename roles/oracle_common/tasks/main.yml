@@ -1,0 +1,68 @@
+---
+# https://docs.oracle.com/database/121/LACLI/pre_install.htm#LACLI1283
+- name: Oracle 12c required packages
+  yum: 
+    name:  "{{ packages }}"
+  vars:
+    packages:
+    - binutils.x86_64
+    - compat-libcap1.x86_64
+    - compat-libstdc++-33
+    - gcc.x86_64
+    - gcc-c++.x86_64
+    - glibc.i686
+    - glibc.x86_64
+    - glibc-devel.i686
+    - glibc-devel.x86_64
+    - ksh
+    - libaio.i686
+    - libaio.x86_64
+    - libaio-devel.i686
+    - libaio-devel.x86_64
+    - libgcc.i686
+    - libgcc.x86_64
+    - libstdc++.i686
+    - libstdc++.x86_64
+    - libstdc++-devel.i686
+    - libstdc++-devel.x86_64
+    - libXi.i686 
+    - libXi.x86_64
+    - libXtst.i686
+    - libXtst.x86_64
+    - make.x86_64
+    - sysstat.x86_64
+    - zip
+    - unzip
+
+- name: Oracle 12c required groups
+  group:
+    name:  "{{ item }}"
+    state: present
+  loop:
+    - "{{ oracle.groups.inventory }}"
+    - "{{ oracle.groups.dba }}"
+
+- name: Oracle 12c required install account
+  user:
+    name: "{{ oracle.user }}"
+    group: "{{ oracle.groups.inventory }}"
+    groups: "{{ oracle.groups.dba }}"
+  notify:
+    - set-passord-oracle
+
+- name: Oracle 12c install location
+  file: 
+    path: "{{ oracle.home }}"
+    state: directory
+    recurse: yes
+    owner: "{{ oracle.user }}"
+    group: "{{ oracle.groups.inventory }}"
+    mode: u=rwx,g=rx,o=rx
+
+- name: Oracle invetory file
+  template: 
+    dest: /etc/oraInst.loc
+    src: ../files/oraInst.loc
+    owner: "{{ oracle.user }}"
+    group: "{{ oracle.groups.inventory }}"
+    mode: u=rw,g=r,o=r

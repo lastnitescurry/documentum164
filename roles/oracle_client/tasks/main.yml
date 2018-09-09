@@ -1,0 +1,11 @@
+---
+# https://docs.oracle.com/database/121/LACLI/pre_install.htm#LACLI1283
+
+
+- name: Oracle 12c environment variables bashrc file 
+  template: 
+    dest: /etc/profile.d/oracle_client.sh
+    src: ../files/environment.exports.sh
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
