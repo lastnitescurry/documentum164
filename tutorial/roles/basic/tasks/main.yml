@@ -1,16 +1,10 @@
 ---
-- name: "Install VIM"
-  yum: 
-    name:  vim 
-    state: installed
-
 # https://docs.ansible.com/ansible/latest/modules/yum_module.html
 - name: ensure a list of packages installed
   yum: 
     name:  "{{ packages }}"
   vars:
     packages:
-    - vim
     - git
 
 - name: Create account for myself

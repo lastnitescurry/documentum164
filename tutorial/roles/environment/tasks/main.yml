@@ -4,6 +4,7 @@
 # https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
 # https://docs.ansible.com/ansible/latest/modules/set_fact_module.html#set-fact-module
 
+# TODO RTFM and follow tutorial on the kosher way to define variables
 - name: Define Oracle 12c variables
   set_fact:
     oracle_base:    "/opt/oracle"
