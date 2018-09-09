@@ -1,2 +1,2 @@
-inventory_loc={{ oracle_inventory }}
+inventory_loc={{ oracle.inventory }}
 inst_group=oinstall

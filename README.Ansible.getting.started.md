@@ -21,9 +21,11 @@ To get started following: Ansible - A Beginner's Tutorial
 ### Ansible - Ad hoc
 #### Hello World
 
-    export ANSIBLE_CONFIG=/vagrant/tutorial/ansible.cfg
+    export ANSIBLE_CONFIG=/vagrant/ansible.cfg
     echo $ANSIBLE_CONFIG
-    cd /vagrant/tutorial/
+    cd /vagrant
+
+- https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html
 
     ansible -m ping all
     ansible -m shell -a 'hostname' all
@@ -42,7 +44,7 @@ To get started following: Ansible - A Beginner's Tutorial
 ### Ansible - Roles
 ##### Setup
 
-    cd /vagrant/tutorial/
+    cd /vagrant/
     mkdir -p roles/basic/tasks
     touch roles/basic/tasks/main.yml
     touch playbook.yml
@@ -57,7 +59,7 @@ To get started following: Ansible - A Beginner's Tutorial
 ### Ansible - Oracle 12c
 ##### Setup
 
-    cd /vagrant/tutorial/
+    cd /vagrant/
     mkdir -p roles/oracle12c/tasks
     touch roles/oracle12c/tasks/main.yml
     mkdir -p roles/oracle12c/handlers
@@ -73,3 +75,12 @@ To get started following: Ansible - A Beginner's Tutorial
     /tmp/database/runInstaller -silent -responseFile /tmp/db_install.rsp
     
     rm -rf /tmp/OraInstall*
+
+    
+### Ansible - lookup
+
+    {{ lookup('password', 'credentials/dbpassword.txt') }}
+    
+### Side tracked again
+Ansible can use read hosts from YAML file, hence why not update Vagrant to also read same file. 
+https://github.com/ansible/ansible/blob/devel/examples/hosts.yaml

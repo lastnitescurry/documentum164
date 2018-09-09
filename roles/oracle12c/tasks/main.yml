@@ -42,20 +42,16 @@
     name:  "{{ item }}"
     state: present
   loop:
-    - oinstall
+    - "{{ oracle.groups.oinstall }}"
     - dba
 
 - name: Oracle 12c required install account
   user:
     name: oracle
-    group: oinstall
+    group: "{{ oracle.groups.oinstall }}"
     groups: dba
   notify:
     - set-passord-oracle
-    
-- name: Report Oracle 12c home
-  debug:
-    msg: "Oracle Home: {{ oracle_home }}"
 
 - name: Oracle 12c environment variables bashrc file 
   template: 
@@ -85,20 +81,11 @@
 
 - name: Oracle 12c install location
   file: 
-    path: "{{ oracle_home }}"
+    path: "{{ oracle.home }}"
     state: directory
     recurse: yes
     owner: oracle
-    group: oinstall
-    mode: u=rwx,g=rx,o=rx
-
-- name: Oracle 12c software dir
-  file: 
-    path: "{{ oracle_software_unpack_dir }}"
-    state: directory
-    recurse: yes
-    owner: oracle
-    group: oinstall
+    group: "{{ oracle.groups.oinstall }}"
     mode: u=rwx,g=rx,o=rx
 
 # https://docs.ansible.com/ansible/latest/user_guide/playbooks_blocks.html
@@ -110,32 +97,32 @@
     dest:       /tmp
     remote_src: yes
     owner: oracle
-    group: oinstall
+    group: "{{ oracle.groups.oinstall }}"
   loop:
-    - { zip: '{{ oracle_media1 }}', creates: '/tmp/database/welcome.html' }
-    - { zip: '{{ oracle_media2 }}', creates: '/tmp/database/stage/Components/oracle.ctx' }
+    - { zip: '{{ oracle.media.zip1 }}', creates: '{{ oracle.media.installer }}/welcome.html' }
+    - { zip: '{{ oracle.media.zip1 }}', creates: '{{ oracle.media.installer }}/stage/Components/oracle.ctx' }
 
-- name: To perform silent installation  we must create oraInst.loc
+- name: create oraInst.loc for silent installation
   template: 
     dest: /etc/oraInst.loc
     src: ../files/oraInst.loc
     owner: oracle
-    group: oinstall
+    group: "{{ oracle.groups.oinstall }}"
     mode: 644
 
-- name: To perform silent installation  we must create response file.
+- name: Create response file for silent installation
   template: 
-    dest: "/tmp/db_install.rsp"
+    dest: "{{ oracle.media.installer }}/db_install.rsp"
     src: ../files/db_install.rsp
     owner: oracle
-    group: oinstall
+    group: "{{ oracle.groups.oinstall }}"
     mode: u=rw,g=r,o=r
 
 
-- name: Run the Oracle 12c installer
-  shell: /tmp/database/runInstaller -silent -responseFile /tmp/db_install.rsp 
-  args:
-    chdir: /tmp/database
+#- name: Run the Oracle 12c installer
+#  shell: /tmp/database/runInstaller -silent -responseFile /tmp/db_install.rsp 
+#  args:
+#    chdir: /tmp/database
 #    creates: somelog.txt
-  become: true
-  become_user: oracle
+#  become: true
+#  become_user: oracle

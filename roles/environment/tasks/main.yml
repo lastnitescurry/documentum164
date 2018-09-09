@@ -5,26 +5,34 @@
 # https://docs.ansible.com/ansible/latest/modules/set_fact_module.html#set-fact-module
 
 # TODO RTFM and follow tutorial on the kosher way to define variables
-- name: Define Oracle 12c variables
-  set_fact:
-    oracle_base:    "/opt/oracle"
-    oracle_version: 12.1.0.2
-    oracle_sid:     fgdb
-    oracle_unqname: fgdb
-    oracle_software_unpack_dir: "/tmp/oracle"
-    oracle_media1: "/media/software/Oracle/Database/linuxamd64_12102_database_1of2.zip"
-    oracle_media2: "/media/software/Oracle/Database/linuxamd64_12102_database_2of2.zip"
+#- name: Define Oracle 12c variables
+#  set_fact:
+#    oracle_base:    "/opt/oracle"
+#    oracle_version: 12.1.0.2
+#    oracle_sid:     fgdb
+#    oracle_unqname: fgdb
+#    oracle_software_unpack_dir: "/tmp/oracle"
+#    oracle_media1: "/media/software/Oracle/Database/linuxamd64_12102_database_1of2.zip"
+#    oracle_media2: "/media/software/Oracle/Database/linuxamd64_12102_database_2of2.zip"
 
-- name: Define Oracle 12c home
-  set_fact:
-    oracle_home:      "{{ oracle_base }}/product/{{ oracle_version }}/{{ oracle_unqname }}"
-    oracle_inventory: "{{ oracle_base }}/oraInventory"
-    cacheable: true
+#- name: Define Oracle 12c home
+#  set_fact:
+#    oracle_home:      "{{ oracle_base }}/product/{{ oracle_version }}/{{ oracle_unqname }}"
+#    oracle_inventory: "{{ oracle_base }}/oraInventory"
+#    cacheable: true
 
 - name: Report hostname variables
   debug:
     msg: System {{ ansible_hostname }} is also called {{ inventory_hostname }} has uuid {{ ansible_product_uuid }}
 
-- name: Report Oracle 12c home
+#- name: Report Oracle 12c home
+#  debug:
+#    msg: "Oracle Home: {{ oracle_home }}"
+
+- name: Report Oracle 12c home variables from host.yaml
   debug:
-    msg: "Oracle Home: {{ oracle_home }}"
+    msg: "Oracle Base from host.yaml: {{ oracle.base }} and home: {{ oracle.home }}"
+
+- name: Report Oracle 12c media variables from host.yaml
+  debug:
+    msg: "Oracle zips ({{ oracle.media.zip1 }}, {{ oracle.media.zip2 }} will be extrated into: {{ oracle.media.installer }}"
