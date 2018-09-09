@@ -64,8 +64,7 @@ To get started following: Ansible - A Beginner's Tutorial
     touch roles/oracle12c/tasks/main.yml
     mkdir -p roles/oracle12c/handlers
     touch roles/oracle12c/handlers/main.yml
-    
-    
+        
 ##### Run
     ansible-playbook playbook.yml
 
