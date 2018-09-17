@@ -41,7 +41,7 @@
     group: "{{ oracle.groups.inventory }}"
   loop:
     - { zip: '{{ oracle.media.zip1 }}', creates: '{{ oracle.media.installer }}/welcome.html' }
-    - { zip: '{{ oracle.media.zip1 }}', creates: '{{ oracle.media.installer }}/stage/Components/oracle.ctx.core' }
+    - { zip: '{{ oracle.media.zip2 }}', creates: '{{ oracle.media.installer }}/stage/Components/oracle.ctx' }
 
 - name: Create response file for silent installation
   template: 
