@@ -22,7 +22,7 @@
     - apply-kernel-parameters
 
 - name: Oracle 12c security limits
-  copy:
+  template:
     src: ../files/security.limits.conf
     dest: /etc/security/limits.d/oracle12c.conf
     owner: root

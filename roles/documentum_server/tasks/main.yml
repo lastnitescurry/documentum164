@@ -1,0 +1,69 @@
+---
+- name: Documentum Server required packages
+  yum: 
+    name:  "{{ packages }}"
+  vars:
+    packages:
+    - expect
+    - tcl
+
+- name: Documentum Server group
+  group:
+    name:  "{{ documentum_server.group }}"
+    gid:   "{{ documentum_server.gid }}"
+    state: present
+
+- name: Documentum server required install account
+  user:
+    name:  "{{ documentum_server.user }}"
+    group: "{{ documentum_server.group }}"
+    groups: 
+       - "{{ oracle.groups.dba }}"
+       - "{{ oracle.groups.inventory }}"
+  notify:
+    - set-passord-documentum
+
+- name: Documentum Server install location
+  file: 
+    path: "{{ item }}"
+    state: directory
+    recurse: yes
+    owner: "{{ documentum_server.user }}"
+    group: "{{ documentum_server.group }}"
+    mode: u=rwx,g=rx,o=rx
+  loop:
+    - "{{ documentum_server.documentum }}"
+    - "{{ documentum_server.dctm_shared }}"
+    - "{{ documentum_server.dm_home }}"
+    - "{{ documentum_server.media.installer }}"
+
+- name: Documentum Server pre-installation tasks for Red Hat Enterprise Linux
+  file: 
+    path:  /usr/lib64/libsasl2.so.2
+    src:   /usr/lib64/libsasl2.so.3.0.0 
+    state: link
+
+- name: Documentum environment variables bashrc file 
+  template: 
+    dest: /etc/profile.d/documentum_server.sh
+    src: ../files/environment.exports.sh
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Documentum Server security limits
+  copy:
+    src: ../files/security.limits.conf
+    dest: /etc/security/limits.d/documentum_server.conf
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Unpack Documentum media
+  unarchive:
+    src:        "{{ documentum_server.media.zip }}" 
+    dest:       "{{ documentum_server.media.installer }}"
+    creates:    "{{ documentum_server.media.installer }}/serverSetup.bin" 
+    remote_src: yes
+    owner: "{{ documentum_server.user }}"
+    group: "{{ documentum_server.group }}"
