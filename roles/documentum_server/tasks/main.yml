@@ -67,3 +67,20 @@
     remote_src: yes
     owner: "{{ documentum_server.user }}"
     group: "{{ documentum_server.group }}"
+
+- name: Setup script to install Documentum Server software 
+  template: 
+    dest: "{{ documentum_server.media.installer }}/serverSetup.sh"
+    src: ../files/serverSetup.sh
+    owner: "{{ documentum_server.user }}"
+    group: "{{ documentum_server.group }}"
+    mode: u=rwx,g=r,o=r
+
+- name: Install Documentum Server software
+  shell: "{{ documentum_server.media.installer }}/serverSetup.sh"
+  become: true
+  become_user: dmadmin
+  args:
+    executable: /bin/bash
+    chdir: "{{ documentum_server.media.installer }}"
+    creates: "{{ documentum_server.dm_home }}/version.txt"

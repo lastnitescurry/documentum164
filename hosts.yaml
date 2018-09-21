@@ -35,6 +35,9 @@ all:
         tmp:        /tmp
         installer:  /tmp/documentum_server
         zip:        /media/software/Documentum/D164/content_server_16.4_linux64_oracle.tar
+      jms:
+        port:       9090
+        dir:        /opt/documentum/wildfly9.0.1/server/DctmServer_MethodServer
 
 #
 # https://github.com/ansible/ansible/blob/devel/examples/hosts.yaml
