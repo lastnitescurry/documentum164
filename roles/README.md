@@ -8,6 +8,8 @@ To get started following: Ansible - A Beginner's Tutorial
 - https://www.youtube.com/watch?v=aeGDc7rCK_0
 
 ### SSH
+- https://stackoverflow.com/questions/39275038/auto-answer-ssh-copy-id-in-shell-script
+
 #### Generate
     ssh-keygen -q -t ecdsa -b 521 -f ~/.ssh/id_ecdsa -N ""
     

@@ -55,3 +55,4 @@ build-iPhoneSimulator/
 # Backups
 *- Copy*
 *.bak*
+/credentials/

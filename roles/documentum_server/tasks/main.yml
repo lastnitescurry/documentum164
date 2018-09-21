@@ -36,6 +36,7 @@
     - "{{ documentum_server.dctm_shared }}"
     - "{{ documentum_server.dm_home }}"
     - "{{ documentum_server.media.installer }}"
+    - "{{ documentum_server.patch.installer }}"
 
 - name: Documentum Server pre-installation tasks for Red Hat Enterprise Linux
   file: 
@@ -59,7 +60,7 @@
     group: root
     mode: u=rw,g=r,o=r
 
-- name: Unpack Documentum media
+- name: Unpack Documentum Server media
   unarchive:
     src:        "{{ documentum_server.media.zip }}" 
     dest:       "{{ documentum_server.media.installer }}"
@@ -83,4 +84,30 @@
   args:
     executable: /bin/bash
     chdir: "{{ documentum_server.media.installer }}"
+    creates: "{{ documentum_server.dm_home }}/version.txt"
+
+- name: Unpack Documentum Server Patch media
+  unarchive:
+    src:        "{{ documentum_server.patch.zip }}" 
+    dest:       "{{ documentum_server.patch.installer }}"
+    creates:    "{{ documentum_server.patch.installer }}/patch.bin" 
+    remote_src: yes
+    owner: "{{ documentum_server.user }}"
+    group: "{{ documentum_server.group }}"
+
+- name: Setup script to install Documentum Server Patch 
+  template: 
+    dest: "{{ documentum_server.patch.installer }}/patch.sh"
+    src: ../files/serverPatch.sh
+    owner: "{{ documentum_server.user }}"
+    group: "{{ documentum_server.group }}"
+    mode: u=rwx,g=r,o=r
+
+- name: Install Documentum Server Patch
+  shell: "{{ documentum_server.patch.installer }}/patch.sh"
+  become: true
+  become_user: dmadmin
+  args:
+    executable: /bin/bash
+    chdir: "{{ documentum_server.patch.installer }}"
     creates: "{{ documentum_server.dm_home }}/version.txt"

@@ -51,13 +51,30 @@
     group: "{{ oracle.groups.inventory }}"
     mode: u=rw,g=r,o=r
 
-- name: Run the Oracle 12c installer
-  shell: "{{ oracle.media.installer }}/runInstaller -silent -responseFile {{ oracle.media.installer }}/db_install.rsp  -waitforcompletion" 
-  args:
-    chdir: "{{ oracle.media.installer }}"
-    creates: "{{ oracle.home }}/root.sh"
-  become: true
-  become_user: oracle
+#- name: Run the Oracle 12c installer
+#  shell: "{{ oracle.media.installer }}/runInstaller -silent -responseFile {{ oracle.media.installer }}/db_install.rsp  -waitforcompletion" 
+#  args:
+#    chdir: "{{ oracle.media.installer }}"
+#    creates: "{{ oracle.home }}/root.sh"
+#  become: true
+#  become_user: oracle
+
+- name: Setup script to install Oracle 12c Server software 
+  template: 
+    dest: "{{ oracle.media.installer }}/runInstaller.sh"
+    src: ../files/runInstaller.sh
+    owner: "{{ oracle.user }}"
+    group: "{{ oracle.groups.inventory }}"
+    mode: u=rwx,g=r,o=r
+
+# FIXME handle none zero exit code due to failed requirements. Install is good
+#- name: Run the Oracle 12c installer
+#  shell: "{{ oracle.media.installer }}/runInstaller.sh"
+#  args:
+#    chdir: "{{ oracle.media.installer }}"
+#    creates: "{{ oracle.home }}/root.sh"
+#  become: true
+#  become_user: oracle
 
 - name: Run the Oracle 12c post install root task
   shell: "{{ oracle.home }}/root.sh" 
