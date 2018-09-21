@@ -51,11 +51,15 @@
     group: "{{ oracle.groups.inventory }}"
     mode: u=rw,g=r,o=r
 
+- name: Run the Oracle 12c installer
+  shell: "{{ oracle.media.installer }}/runInstaller -silent -responseFile {{ oracle.media.installer }}/db_install.rsp  -waitforcompletion" 
+  args:
+    chdir: "{{ oracle.media.installer }}"
+    creates: "{{ oracle.home }}/root.sh"
+  become: true
+  become_user: oracle
 
-#- name: Run the Oracle 12c installer
-#  shell: /tmp/database/runInstaller -silent -responseFile /tmp/db_install.rsp 
-#  args:
-#    chdir: /tmp/database
-#    creates: somelog.txt
-#  become: true
-#  become_user: oracle
+- name: Run the Oracle 12c post install root task
+  shell: "{{ oracle.home }}/root.sh" 
+  args:
+    creates: "/etc/oratab"
