@@ -13,9 +13,10 @@ Documentum 16.4 on Centos
 #### WORKAROUND Vagrant problem. Prevent hostname from binding to the loopback address
 - https://github.com/hashicorp/vagrant/issues/7263
 
-    sudo -i
-    
+    sudo -i    
     sed -i '1d' /etc/hosts
+    cat /etc/hosts
+    exit
 
 and setup SSH
 #### SSH - Generate
