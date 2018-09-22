@@ -55,4 +55,7 @@ build-iPhoneSimulator/
 # Backups
 *- Copy*
 *.bak*
+
+# Ansible
+*.retry
 /credentials/

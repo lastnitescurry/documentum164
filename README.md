@@ -42,6 +42,10 @@ and setup SSH
 ##### Ansible - Run playbook
     cd /vagrant
     ansible-playbook playbook.yml
+    
+##### Ansible - Run tagged items in playbook 
+    cd /vagrant
+    ansible-playbook playbook.yml --tags "patch"
 
 ### Tear down and destroy all virtual machines
 	
@@ -56,12 +60,14 @@ Hopefully my contribution will be some Documentum specific install examples
 
 ### Ansible
 
-- https://docs.ansible.com/ansible/2.5/scenario_guides/guide_vagrant.html
+- https://docs.ansible.com/ansible/latest/scenario_guides/guide_vagrant.html
+- https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
+- https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html
+- https://docs.ansible.com/ansible/latest/reference_appendices/common_return_values.html
 - https://github.com/geerlingguy/packer-centos-7
 - https://www.vagrantup.com/docs/provisioning/ansible_local.html
 - https://www.vagrantup.com/docs/provisioning/ansible.html
 - https://www.vagrantup.com/docs/provisioning/ansible_intro.html
-- https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
 - https://everythingshouldbevirtual.com/automation/ansible-using-set_facts-module/
 
 #### Ben's IT Lessons - Ansible - A Beginner's Tutorial

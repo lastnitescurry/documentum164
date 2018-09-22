@@ -32,15 +32,18 @@ all:
       group:        dmadmin
       gid:          5000 
       media:
-        installer:  /tmp/documentum_server
+        tmpdir:     /tmp/documentum_server
         zip:        /media/software/Documentum/D164/content_server_16.4_linux64_oracle.tar
-      patch:
-        installer:  /tmp/documentum_server_patch
-        zip:        /media/software/Documentum/D164/CS_16.4.0040.0057_linux_ora_P04.tar.gz
-        zip_file:   CS_16.4.0040.0057_linux_ora.tar.gz
       jms:
         port:       9090
         dir:        /opt/documentum/wildfly9.0.1/server/DctmServer_MethodServer
+    documentum_server_patch:
+      version:      CS_16.4.0040.0057_linux_ora
+      media:
+        tmpdir:     /tmp/documentum_server_patch
+        zip:        /media/software/Documentum/D164/CS_16.4.0040.0057_linux_ora_P04.tar.gz
+        tar:        /tmp/documentum_server_patch/CS_16.4.0040.0057_linux_ora_P04.tar
+        targz:      CS_16.4.0040.0057_linux_ora.tar.gz
 
 #
 # https://github.com/ansible/ansible/blob/devel/examples/hosts.yaml

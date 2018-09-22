@@ -1,0 +1,63 @@
+---
+- name: Documentum Server Patch locations
+  file: 
+    path:       "{{ documentum_server_patch.media.tmpdir }}"
+    state:      directory
+    recurse:    yes
+    owner:      "{{ documentum_server.user }}"
+    group:      "{{ documentum_server.group }}"
+    mode:       u=rwx,g=rx,o=rx
+  tags:
+    - patch
+
+- name: Unpack Documentum Server Patch tar.gz
+  unarchive:
+    src:        "{{ documentum_server_patch.media.zip }}" 
+    dest:       "{{ documentum_server_patch.media.tmpdir }}"
+    creates:    "{{ documentum_server_patch.media.tar }}" 
+    remote_src: yes
+    owner:      "{{ documentum_server.user }}"
+    group:      "{{ documentum_server.group }}"
+  tags:
+    - patch
+
+- name: Unpack Documentum Server Patch tar
+  unarchive:
+    src:        "{{ documentum_server_patch.media.tar }}" 
+    dest:       "{{ documentum_server_patch.media.tmpdir }}"
+    creates:    "{{ documentum_server_patch.media.tmpdir }}/patch.bin" 
+    remote_src: yes
+    owner:      "{{ documentum_server.user }}"
+    group:      "{{ documentum_server.group }}"
+  tags:
+    - patch
+
+- name: Setup script to install Documentum Server Patch 
+  template: 
+    dest:       "{{ documentum_server_patch.media.tmpdir }}/patch.sh"
+    src:        ../files/serverPatch.sh
+    owner:      "{{ documentum_server.user }}"
+    group:      "{{ documentum_server.group }}"
+    mode:       u=rwx,g=r,o=r
+  tags:
+    - patch
+
+- name: Install Documentum Server Patch
+  shell:        "{{ documentum_server_patch.media.tmpdir }}/patch.bin LAX_VM {{ documentum_server.dctm_shared }}/java64/JAVA_LINK/jre/bin/java -r response.properties -i Silent -DUSER_SELECTED_PATCH_ZIP_FILE={{ documentum_server_patch.media.targz }}"
+  become:       true
+  become_user:  dmadmin
+  args:
+    executable: /bin/bash
+    chdir:      "{{ documentum_server_patch.media.tmpdir }}"
+#    creates:    "{{ documentum_server.dm_home }}/version.txt"
+  register: patchbin
+  tags:
+    - patch
+
+- debug: var=patchbin.stdout_lines
+  tags:
+    - patch
+- debug: var=patchbin.cmd
+  tags:
+    - patch
+    

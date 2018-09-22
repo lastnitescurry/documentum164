@@ -25,18 +25,16 @@
 
 - name: Documentum Server install location
   file: 
-    path: "{{ item }}"
-    state: directory
-    recurse: yes
-    owner: "{{ documentum_server.user }}"
-    group: "{{ documentum_server.group }}"
-    mode: u=rwx,g=rx,o=rx
+    path:     "{{ item }}"
+    state:    directory
+    recurse:  no
+    owner:    "{{ documentum_server.user }}"
+    group:    "{{ documentum_server.group }}"
+    mode:     u=rwx,g=rx,o=rx
   loop:
     - "{{ documentum_server.documentum }}"
     - "{{ documentum_server.dctm_shared }}"
-    - "{{ documentum_server.dm_home }}"
-    - "{{ documentum_server.media.installer }}"
-    - "{{ documentum_server.patch.installer }}"
+    - "{{ documentum_server.media.tmpdir }}"
 
 - name: Documentum Server pre-installation tasks for Red Hat Enterprise Linux
   file: 
@@ -46,68 +44,42 @@
 
 - name: Documentum environment variables bashrc file 
   template: 
-    dest: /etc/profile.d/documentum_server.sh
-    src: ../files/environment.exports.sh
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
+    dest:   /etc/profile.d/documentum_server.sh
+    src:    ../files/environment.exports.sh
+    owner:  root
+    group:  root
+    mode:   u=rw,g=r,o=r
 
 - name: Documentum Server security limits
   copy:
-    src: ../files/security.limits.conf
-    dest: /etc/security/limits.d/documentum_server.conf
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
+    src:    ../files/security.limits.conf
+    dest:   /etc/security/limits.d/documentum_server.conf
+    owner:  root
+    group:  root
+    mode:   u=rw,g=r,o=r
 
 - name: Unpack Documentum Server media
   unarchive:
     src:        "{{ documentum_server.media.zip }}" 
-    dest:       "{{ documentum_server.media.installer }}"
-    creates:    "{{ documentum_server.media.installer }}/serverSetup.bin" 
+    dest:       "{{ documentum_server.media.tmpdir }}"
+    creates:    "{{ documentum_server.media.tmpdir }}/serverSetup.bin" 
     remote_src: yes
-    owner: "{{ documentum_server.user }}"
-    group: "{{ documentum_server.group }}"
+    owner:      "{{ documentum_server.user }}"
+    group:      "{{ documentum_server.group }}"
 
 - name: Setup script to install Documentum Server software 
   template: 
-    dest: "{{ documentum_server.media.installer }}/serverSetup.sh"
-    src: ../files/serverSetup.sh
-    owner: "{{ documentum_server.user }}"
-    group: "{{ documentum_server.group }}"
-    mode: u=rwx,g=r,o=r
+    dest:   "{{ documentum_server.media.tmpdir }}/serverSetup.sh"
+    src:    ../files/serverSetup.sh
+    owner:  "{{ documentum_server.user }}"
+    group:  "{{ documentum_server.group }}"
+    mode:   u=rwx,g=r,o=r
 
 - name: Install Documentum Server software
-  shell: "{{ documentum_server.media.installer }}/serverSetup.sh"
-  become: true
-  become_user: dmadmin
+  shell:        "{{ documentum_server.media.tmpdir }}/serverSetup.sh"
+  become:       true
+  become_user:  dmadmin
   args:
     executable: /bin/bash
-    chdir: "{{ documentum_server.media.installer }}"
-    creates: "{{ documentum_server.dm_home }}/version.txt"
-
-- name: Unpack Documentum Server Patch media
-  unarchive:
-    src:        "{{ documentum_server.patch.zip }}" 
-    dest:       "{{ documentum_server.patch.installer }}"
-    creates:    "{{ documentum_server.patch.installer }}/patch.bin" 
-    remote_src: yes
-    owner: "{{ documentum_server.user }}"
-    group: "{{ documentum_server.group }}"
-
-- name: Setup script to install Documentum Server Patch 
-  template: 
-    dest: "{{ documentum_server.patch.installer }}/patch.sh"
-    src: ../files/serverPatch.sh
-    owner: "{{ documentum_server.user }}"
-    group: "{{ documentum_server.group }}"
-    mode: u=rwx,g=r,o=r
-
-- name: Install Documentum Server Patch
-  shell: "{{ documentum_server.patch.installer }}/patch.sh"
-  become: true
-  become_user: dmadmin
-  args:
-    executable: /bin/bash
-    chdir: "{{ documentum_server.patch.installer }}"
-    creates: "{{ documentum_server.dm_home }}/version.txt"
+    chdir:      "{{ documentum_server.media.tmpdir }}"
+    creates:    "{{ documentum_server.dm_home }}/version.txt"

@@ -1,0 +1,3 @@
+---
+- name: set-passord-documentum
+  shell: echo vagrant|passwd --stdin {{ documentum_server.user }}
