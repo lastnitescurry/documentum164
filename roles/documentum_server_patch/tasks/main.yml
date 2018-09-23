@@ -1,5 +1,32 @@
 ---
-- name: Documentum Server Patch locations
+# https://stackoverflow.com/questions/38461920/ansible-check-if-string-exists-in-file
+# https://stackoverflow.com/questions/30786263/only-check-whether-a-line-present-in-a-file-ansible/30788277
+
+- name: Check if Documentum Server Patch has been installed
+  command:        grep {{ documentum_server_patch.version }} {{ documentum_server_patch.info }}
+  register:       checkForPatchName
+  ignore_errors:  yes
+  check_mode:     no
+  changed_when:   no
+  tags:
+    - patch
+    - facts
+
+- name: Documentum Server Patch {{ documentum_server_patch.version }} has to be installed
+  debug:  msg="No results from grep {{ documentum_server_patch.version }} {{ documentum_server_patch.info }}"
+  when:   checkForPatchName.rc == 1
+  tags:
+    - patch
+    - facts
+
+- name: Documentum Server Patch {{ documentum_server_patch.version }} has been installed
+  debug:  msg="Nothing more to do, patch has been installed, see {{ checkForPatchName.stdout }}"
+  when:   checkForPatchName.rc == 0
+  tags:
+    - patch
+    - facts
+    
+- name: Documentum Server Patch tempory directory {{ documentum_server_patch.media.tmpdir }}
   file: 
     path:       "{{ documentum_server_patch.media.tmpdir }}"
     state:      directory
@@ -7,10 +34,11 @@
     owner:      "{{ documentum_server.user }}"
     group:      "{{ documentum_server.group }}"
     mode:       u=rwx,g=rx,o=rx
+  when:         checkForPatchName.rc == 1
   tags:
     - patch
 
-- name: Unpack Documentum Server Patch tar.gz
+- name: Unpack Documentum Server Patch {{ documentum_server_patch.media.zip }}
   unarchive:
     src:        "{{ documentum_server_patch.media.zip }}" 
     dest:       "{{ documentum_server_patch.media.tmpdir }}"
@@ -18,10 +46,11 @@
     remote_src: yes
     owner:      "{{ documentum_server.user }}"
     group:      "{{ documentum_server.group }}"
+  when:         checkForPatchName.rc == 1
   tags:
     - patch
 
-- name: Unpack Documentum Server Patch tar
+- name: Unpack Documentum Server Patch {{ documentum_server_patch.media.tar }}
   unarchive:
     src:        "{{ documentum_server_patch.media.tar }}" 
     dest:       "{{ documentum_server_patch.media.tmpdir }}"
@@ -29,35 +58,29 @@
     remote_src: yes
     owner:      "{{ documentum_server.user }}"
     group:      "{{ documentum_server.group }}"
-  tags:
-    - patch
-
-- name: Setup script to install Documentum Server Patch 
-  template: 
-    dest:       "{{ documentum_server_patch.media.tmpdir }}/patch.sh"
-    src:        ../files/serverPatch.sh
-    owner:      "{{ documentum_server.user }}"
-    group:      "{{ documentum_server.group }}"
-    mode:       u=rwx,g=r,o=r
+  when:         checkForPatchName.rc == 1
   tags:
     - patch
 
 - name: Install Documentum Server Patch
-  shell:        "{{ documentum_server_patch.media.tmpdir }}/patch.bin LAX_VM {{ documentum_server.dctm_shared }}/java64/JAVA_LINK/jre/bin/java -r response.properties -i Silent -DUSER_SELECTED_PATCH_ZIP_FILE={{ documentum_server_patch.media.targz }}"
+  shell:        "{{ documentum_server_patch.media.tmpdir }}/patch.bin LAX_VM {{ documentum_server_patch.java_home }}/jre/bin/java -r response.properties -i Silent -DUSER_SELECTED_PATCH_ZIP_FILE={{ documentum_server_patch.media.targz }}"
   become:       true
   become_user:  dmadmin
   args:
     executable: /bin/bash
     chdir:      "{{ documentum_server_patch.media.tmpdir }}"
-#    creates:    "{{ documentum_server.dm_home }}/version.txt"
-  register: patchbin
+  when:         checkForPatchName.rc == 1
+  register:     patchbin
   tags:
     - patch
 
 - debug: var=patchbin.stdout_lines
+  when:         checkForPatchName.rc == 1
   tags:
     - patch
+
 - debug: var=patchbin.cmd
+  when:         checkForPatchName.rc == 1
   tags:
     - patch
-    
+  
