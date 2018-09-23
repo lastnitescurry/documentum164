@@ -10,6 +10,7 @@
   roles:
   - oracle_common
   - oracle_server
+  - oracle_listner
 
 - hosts: documentum
   become: true
