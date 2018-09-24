@@ -42,23 +42,23 @@
     src:   /usr/lib64/libsasl2.so.3.0.0 
     state: link
 
-- name: Documentum environment variables bashrc file 
+- name: Documentum environment variables bashrc file /etc/profile.d/documentum_server.sh
   template: 
     dest:   /etc/profile.d/documentum_server.sh
-    src:    ../files/environment.exports.sh
+    src:    environment.exports.sh
     owner:  root
     group:  root
     mode:   u=rw,g=r,o=r
 
-- name: Documentum Server security limits
-  copy:
-    src:    ../files/security.limits.conf
+- name: Documentum Server security limits /etc/security/limits.d/documentum_server.conf
+  template:
     dest:   /etc/security/limits.d/documentum_server.conf
+    src:    security.limits.conf
     owner:  root
     group:  root
     mode:   u=rw,g=r,o=r
 
-- name: Unpack Documentum Server media
+- name: Unpack Documentum Server media {{ documentum_server.media.zip }}
   unarchive:
     src:        "{{ documentum_server.media.zip }}" 
     dest:       "{{ documentum_server.media.tmpdir }}"
@@ -67,15 +67,15 @@
     owner:      "{{ documentum_server.user }}"
     group:      "{{ documentum_server.group }}"
 
-- name: Setup script to install Documentum Server software 
+- name: Setup script to install Documentum Server software {{ documentum_server.media.tmpdir }}/serverSetup.sh
   template: 
+    src:    serverSetup.sh
     dest:   "{{ documentum_server.media.tmpdir }}/serverSetup.sh"
-    src:    ../files/serverSetup.sh
     owner:  "{{ documentum_server.user }}"
     group:  "{{ documentum_server.group }}"
     mode:   u=rwx,g=r,o=r
 
-- name: Install Documentum Server software
+- name: Install Documentum Server software {{ documentum_server.media.tmpdir }}/serverSetup.sh
   shell:        "{{ documentum_server.media.tmpdir }}/serverSetup.sh"
   become:       true
   become_user:  dmadmin

@@ -22,6 +22,11 @@ all:
         installer:  /tmp/database
         zip1:       /media/software/Oracle/Database/linuxamd64_12102_database_1of2.zip
         zip2:       /media/software/Oracle/Database/linuxamd64_12102_database_2of2.zip
+    oracle_database:
+      base:         /opt/oracle
+      version:      12.1.0.2
+      sid:          fgdb
+      gdbname:      fgdb.fg.ie
     documentum_server:
       documentum:   /opt/documentum
       dctm_shared:  /opt/documentum/shared

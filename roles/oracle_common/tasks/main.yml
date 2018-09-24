@@ -42,7 +42,7 @@
     - "{{ oracle.groups.inventory }}"
     - "{{ oracle.groups.dba }}"
 
-- name: Oracle 12c required install account
+- name: Oracle 12c install account {{ oracle.user }}
   user:
     name: "{{ oracle.user }}"
     group: "{{ oracle.groups.inventory }}"
@@ -50,7 +50,7 @@
   notify:
     - set-passord-oracle
 
-- name: Oracle 12c install location
+- name: Oracle 12c install location {{ oracle.home }}
   file: 
     path: "{{ oracle.home }}"
     state: directory
@@ -59,10 +59,10 @@
     group: "{{ oracle.groups.inventory }}"
     mode: u=rwx,g=rx,o=rx
 
-- name: Oracle invetory file
+- name: Oracle invetory file /etc/oraInst.loc
   template: 
-    dest: /etc/oraInst.loc
-    src: ../files/oraInst.loc
+    dest:  /etc/oraInst.loc
+    src:   oraInst.loc
     owner: "{{ oracle.user }}"
     group: "{{ oracle.groups.inventory }}"
-    mode: u=rw,g=r,o=r
+    mode:  u=rw,g=r,o=r
