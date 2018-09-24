@@ -63,6 +63,7 @@ Hopefully my contribution will be some Documentum specific install examples
 - https://docs.ansible.com/ansible/latest/scenario_guides/guide_vagrant.html
 - https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
 - https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html
+- https://docs.ansible.com/ansible/latest/user_guide/playbooks_environment.html
 - https://docs.ansible.com/ansible/latest/reference_appendices/common_return_values.html
 - https://github.com/geerlingguy/packer-centos-7
 - https://www.vagrantup.com/docs/provisioning/ansible_local.html

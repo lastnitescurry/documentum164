@@ -42,12 +42,20 @@
     src:   /usr/lib64/libsasl2.so.3.0.0 
     state: link
 
-- name: Documentum environment variables bashrc file /etc/profile.d/documentum_server.sh
+- name: Documentum environment global bashrc file /etc/profile.d/documentum_server.sh
   template: 
     dest:   /etc/profile.d/documentum_server.sh
     src:    environment.exports.sh
     owner:  root
     group:  root
+    mode:   u=rw,g=r,o=r
+
+- name: Documentum environment user bashrc file /home/{{ documentum_server.user }}/.bashrc
+  template: 
+    dest:   /home/{{ documentum_server.user }}/.bashrc
+    src:    environment.bashrc.sh
+    owner:  "{{ documentum_server.user }}"
+    group:  "{{ documentum_server.group }}"
     mode:   u=rw,g=r,o=r
 
 - name: Documentum Server security limits /etc/security/limits.d/documentum_server.conf

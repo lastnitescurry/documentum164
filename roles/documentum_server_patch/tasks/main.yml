@@ -73,6 +73,10 @@
   register:     patchbin
   tags:
     - patch
+  environment:
+    DOCUMENTUM: "{{ documentum_server.documentum }}"
+    DM_HOME:    "{{ documentum_server.dm_home }}"
+    DOCUMENTUM_SHARED: "{{ documentum_server.dctm_shared }}"
 
 - debug: var=patchbin.stdout_lines
   when:         checkForPatchName.rc == 1
