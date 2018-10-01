@@ -98,11 +98,7 @@ file system... follow well proven standards
 
 #### Oracle 12c
 
+- https://github.com/cvezalis/oracledb-ansible
 - https://www.nodalpoint.com/devops-ansible-oracle-database-oraclelinux-7-vagrant/
-- https://github.com/cvezalis/oracledb-ansible.git
-- https://www.nodalpoint.com/devops-ansible-oracle-database-oraclelinux-7-vagrant/
-
-### Ruby
-- https://alvinalexander.com/blog/post/ruby/how-write-text-to-file-ruby-example
-
-##
+- https://stackoverflow.com/questions/17472379/showing-progress-in-oracle-db-silent-installation-with-response-file
+- https://valehagayev.wordpress.com/2016/09/08/oracle-12-1-0-2-silent-install-and-de-installation-on-oel

@@ -6,4 +6,4 @@
   command:      "{{ oracle.home }}/bin/netca -silent -responseFile {{ oracle.home }}/assistants/netca/netca.rsp"
   creates:      "{{ oracle.home }}/network/admin/listener.ora"  
   become:       true
-  become_user:  oracle
+  become_user:  "{{ oracle.user }}"

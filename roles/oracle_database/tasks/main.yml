@@ -1,0 +1,14 @@
+---
+- name: Create response file for silent installation
+  template: 
+    dest:  "{{ oracle.media.installer }}/dbca.rsp"
+    src:   dbca.rsp
+    owner: "{{ oracle.user }}"
+    group: "{{ oracle.groups.inventory }}"
+    mode:  u=rw,g=r,o=r
+
+- name: Install Documentum Server Patch
+  command:     "{{ oracle.home }}/bin/dbca -silent -responseFile {{ oracle.media.installer }}/dbca.rsp"
+  become:       true
+  become_user:  "{{ oracle.user }}"
+  

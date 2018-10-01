@@ -11,6 +11,7 @@
   - oracle_common
   - oracle_server
   - oracle_listner
+  - oracle_database
 
 - hosts: documentum
   become: true
