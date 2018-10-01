@@ -23,6 +23,13 @@ all:
         installer:  /tmp/database
         zip1:       /media/software/Oracle/Database/linuxamd64_12102_database_1of2.zip
         zip2:       /media/software/Oracle/Database/linuxamd64_12102_database_2of2.zip
+    oracle_database:
+       data:        /opt/oracle/oradata/fgdb
+    oracle_client:
+      media:
+        tmpdir:     /tmp
+        installer:  /tmp/client
+        zip:        /media/software/Oracle/Database/linuxamd64_12102_client.zip
     documentum_server:
       documentum:   /opt/documentum
       dctm_shared:  /opt/documentum/shared

@@ -2,10 +2,20 @@
 # https://docs.oracle.com/database/121/LACLI/pre_install.htm#LACLI1283
 
 
-- name: Oracle 12c environment variables bashrc file 
+- name: Oracle 12c client environment variables bashrc file /etc/profile.d/oracle_client.sh 
   template: 
-    dest: /etc/profile.d/oracle_client.sh
-    src: ../files/environment.exports.sh
+    dest:  /etc/profile.d/oracle_client.sh
+    src:   environment.exports.sh
     owner: root
     group: root
-    mode: u=rw,g=r,o=r
+    mode:  u=rw,g=r,o=r
+
+- name: Unpack Oracle Client media {{ oracle_client.media.zip }}
+  unarchive:
+    src:        "{{ oracle_client.media.zip }}" 
+    dest:       "{{ oracle_client.media.tmpdir }}"
+    creates:    "{{ oracle_client.media.installer }}/runInstaller" 
+    remote_src: yes
+    owner:      "{{ oracle.user }}"
+    group:      "{{ oracle.groups.inventory }}"
+

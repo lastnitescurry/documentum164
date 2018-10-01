@@ -86,7 +86,7 @@
 - name: Install Documentum Server software {{ documentum_server.media.tmpdir }}/serverSetup.sh
   shell:        "{{ documentum_server.media.tmpdir }}/serverSetup.sh"
   become:       true
-  become_user:  dmadmin
+  become_user:  "{{ documentum_server.user }}"
   args:
     executable: /bin/bash
     chdir:      "{{ documentum_server.media.tmpdir }}"

@@ -7,8 +7,10 @@
     group: "{{ oracle.groups.inventory }}"
     mode:  u=rw,g=r,o=r
 
-- name: Install Documentum Server Patch
+- name: Create Oracle Database {{ oracle.sid }} in {{ oracle_database.data }}
   command:     "{{ oracle.home }}/bin/dbca -silent -responseFile {{ oracle.media.installer }}/dbca.rsp"
   become:       true
   become_user:  "{{ oracle.user }}"
+  args:
+    creates:    "{{ oracle_database.data }}"
   

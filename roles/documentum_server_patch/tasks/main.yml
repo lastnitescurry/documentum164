@@ -65,7 +65,7 @@
 - name: Install Documentum Server Patch
   shell:        "{{ documentum_server_patch.media.tmpdir }}/patch.bin LAX_VM {{ documentum_server_patch.java_home }}/jre/bin/java -r response.properties -i Silent -DUSER_SELECTED_PATCH_ZIP_FILE={{ documentum_server_patch.media.targz }}"
   become:       true
-  become_user:  dmadmin
+  become_user:  "{{ documentum_server.user }}"
   args:
     executable: /bin/bash
     chdir:      "{{ documentum_server_patch.media.tmpdir }}"
