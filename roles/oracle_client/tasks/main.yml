@@ -52,4 +52,11 @@
     owner: "{{ oracle.user }}"
     group: "{{ oracle.groups.inventory }}"
     mode:  u=rwx,g=rx,o=rx
-    
+
+# https://docs.oracle.com/cd/B19306_01/install.102/b15660/app_port.htm
+- name: Open firewall - Oracle listner
+  firewalld:
+    port:      1521/tcp
+    permanent: true
+    state:     enabled
+    immediate: yes

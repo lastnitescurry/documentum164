@@ -8,3 +8,11 @@
     creates:    "{{ oracle.home }}/network/admin/listener.ora"
   become:       true
   become_user:  "{{ oracle.user }}"
+
+# https://docs.oracle.com/cd/B19306_01/install.102/b15660/app_port.htm
+- name: Open firewall - Oracle listner
+  firewalld:
+    port:      1521/tcp
+    permanent: true
+    state:     enabled
+    immediate: yes
