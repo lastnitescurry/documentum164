@@ -43,3 +43,13 @@
 #  args:
 #    creates: "/etc/oratab"
 
+# Here be dragons... flaky ... does depend on the fetch task in oracle_database having been executed
+# https://stackoverflow.com/questions/48113332/ansible-how-to-copy-files-remote-to-remote?rq=1
+- name: tnsnames.ora 
+  copy:
+    src:   "{{ roles_tmp }}/tnsnames.ora"
+    dest:  "{{ oracle.home }}/network/admin/tnsnames.ora"
+    owner: "{{ oracle.user }}"
+    group: "{{ oracle.groups.inventory }}"
+    mode:  u=rwx,g=rx,o=rx
+    

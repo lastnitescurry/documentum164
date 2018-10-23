@@ -13,4 +13,9 @@
   become_user:  "{{ oracle.user }}"
   args:
     creates:    "{{ oracle_database.data }}"
-  
+
+- name: Copy server tnsames.ora to local for later use on Documentum servers
+  fetch: 
+    dest:  "{{ roles_tmp }}/tnsnames.ora"
+    src:   "{{ oracle.home }}/network/admin/tnsnames.ora"
+    flat: yes
