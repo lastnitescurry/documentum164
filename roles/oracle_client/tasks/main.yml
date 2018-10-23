@@ -19,3 +19,27 @@
     owner:      "{{ oracle.user }}"
     group:      "{{ oracle.groups.inventory }}"
 
+- name: Create response file for silent installation
+  template: 
+    dest:  "{{ oracle_client.media.installer  }}/client_install.rsp"
+    src:   client_install.rsp
+    owner: "{{ oracle.user }}"
+    group: "{{ oracle.groups.inventory }}"
+    mode:  u=rw,g=r,o=r
+
+- name: Run the Oracle 12c Client installer
+  command:     "{{ oracle_client.media.installer }}/runInstaller -silent -ignorePrereq -ignoreSysPrereqs -waitforcompletion -responseFile {{ oracle_client.media.installer  }}/client_install.rsp" 
+  args:
+    chdir:     "{{ oracle_client.media.installer }}"
+    creates:   "{{ oracle.home }}/root.sh"
+  become:      true
+  become_user: "{{ oracle.user }}"
+  register:     runInstaller
+
+- debug: var=runInstaller.stdout_lines
+
+- name: Run the Oracle 12c Client post install root task
+  shell: "{{ oracle.home }}/root.sh"
+#  args:
+#    creates: "/etc/oratab"
+
