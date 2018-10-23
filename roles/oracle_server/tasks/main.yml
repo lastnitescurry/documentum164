@@ -1,29 +1,29 @@
 ---
 - name: Oracle 12c environment variables bashrc file 
   template: 
-    dest: /etc/profile.d/oracle_server.sh
-    src: ../files/environment.exports.sh
+    src:   environment.exports.sh
+    dest:  /etc/profile.d/oracle_server.sh
     owner: root
     group: root
-    mode: u=rw,g=r,o=r
+    mode:  u=rw,g=r,o=r
 
-- name: Oracle 12c kernel parameters
-  copy:
-    src: ../files/kernel.sysctl.conf
-    dest: /etc/sysctl.d/oracle12c.conf
+- name: Oracle 12c kernel parameters /etc/sysctl.d/oracle12c.conf
+  template:
+    src:   kernel.sysctl.conf
+    dest:  /etc/sysctl.d/oracle12c.conf
     owner: root
     group: root
-    mode: u=rw,g=r,o=r
+    mode:  u=rw,g=r,o=r
   notify:
     - apply-kernel-parameters
 
 - name: Oracle 12c security limits
   template:
-    src: ../files/security.limits.conf
-    dest: /etc/security/limits.d/oracle12c.conf
+    src:   security.limits.conf
+    dest:  /etc/security/limits.d/oracle12c.conf
     owner: root
     group: root
-    mode: u=rw,g=r,o=r
+    mode:  u=rw,g=r,o=r
 
 # https://docs.ansible.com/ansible/latest/user_guide/playbooks_blocks.html
 # https://docs.ansible.com/ansible/latest/modules/unarchive_module.html#unarchive-module
@@ -41,19 +41,19 @@
 
 - name: Create response file for silent installation
   template: 
-    dest: "{{ oracle.media.installer }}/db_install.rsp"
-    src: ../files/db_install.rsp
+    src:   db_install.rsp
+    dest:  "{{ oracle.media.installer }}/db_install.rsp"
     owner: "{{ oracle.user }}"
     group: "{{ oracle.groups.inventory }}"
-    mode: u=rw,g=r,o=r
+    mode:  u=rw,g=r,o=r
 
 - name: Run the Oracle 12c installer
   command: "{{ oracle.media.installer }}/runInstaller -silent -ignorePrereq -ignoreSysPrereqs -waitforcompletion -responseFile {{ oracle.media.installer }}/db_install.rsp" 
   args:
-    chdir: "{{ oracle.media.installer }}"
-    creates: "{{ oracle.home }}/root.sh"
-  become: true
-  become_user: oracle
+    chdir:     "{{ oracle.media.installer }}"
+    creates:   "{{ oracle.home }}/root.sh"
+  become:      true
+  become_user: "{{ oracle.user }}"
 
 - name: Run the Oracle 12c post install root task
   shell: "{{ oracle.home }}/root.sh" 
