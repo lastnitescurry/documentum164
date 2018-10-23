@@ -4,6 +4,7 @@
 
 - name: Create default listener using netca
   command:      "{{ oracle.home }}/bin/netca -silent -responseFile {{ oracle.home }}/assistants/netca/netca.rsp"
-  creates:      "{{ oracle.home }}/network/admin/listener.ora"  
+  args:
+    creates:    "{{ oracle.home }}/network/admin/listener.ora"
   become:       true
   become_user:  "{{ oracle.user }}"
