@@ -11,7 +11,7 @@
   user:
     name: brian
   notify:
-    - set-passord-brian
+    - set-password-brian
 
 # https://docs.ansible.com/ansible/latest/modules/copy_module.html#copy-module
 - name: Add date and time to prompt

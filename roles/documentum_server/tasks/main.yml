@@ -21,7 +21,7 @@
        - "{{ oracle.groups.dba }}"
        - "{{ oracle.groups.inventory }}"
   notify:
-    - set-passord-documentum
+    - set-password-documentum
 
 - name: Documentum Server install location
   file: 

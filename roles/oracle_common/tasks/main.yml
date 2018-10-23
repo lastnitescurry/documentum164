@@ -48,7 +48,7 @@
     group: "{{ oracle.groups.inventory }}"
     groups: "{{ oracle.groups.dba }}"
   notify:
-    - set-passord-oracle
+    - set-password-oracle
 
 - name: Oracle 12c install location {{ oracle.home }}
   file: 
