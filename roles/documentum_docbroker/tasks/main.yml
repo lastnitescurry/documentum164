@@ -1,0 +1,26 @@
+---
+- name: Create Documentum Docbroker response file 
+  template: 
+    dest:   "{{ documentum_server.documentum }}/config.docbroker.properties" 
+    src:    linux_config.properties
+    owner:  "{{ documentum_server.user }}"
+    group:  "{{ documentum_server.group }}"
+    mode:   u=rw,g=r,o=r
+
+- name: Create Docbroker
+  shell:        "{{ documentum_server.dm_home }}/install/dm_launch_server_config_program.sh -f {{ documentum_server.documentum }}/config.docbroker.properties -r {{ documentum_server.documentum }}/response.docbroker.properties -i Silent"
+  become:       true
+  become_user:  "{{ documentum_server.user }}"
+  args:
+    executable: /bin/bash
+    chdir:      "{{ documentum_server.dm_home }}/install"
+    creates:    "{{ documentum_server.documentum }}/dba/dm_launch_Docbroker"
+  register:     docbroker
+  environment:
+    DOCUMENTUM:  "{{ documentum_server.documentum }}"
+    DM_HOME:     "{{ documentum_server.dm_home }}"
+    DOCUMENTUM_SHARED: "{{ documentum_server.dctm_shared }}"
+    ORACLE_HOME: "{{ oracle.home }}"
+    ORACLE_SID:  "{{ oracle.sid }}"
+
+- debug: var=docbroker.stdout_lines
