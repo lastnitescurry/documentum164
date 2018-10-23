@@ -62,6 +62,16 @@
   tags:
     - patch
 
+- name: Documentum Server Patch permissions {{ documentum_server_patch.media.tmpdir }}/patch.bin
+  file: 
+    path:       "{{ documentum_server_patch.media.tmpdir }}/patch.bin"
+    owner:      "{{ documentum_server.user }}"
+    group:      "{{ documentum_server.group }}"
+    mode:       u=rwx,g=r,o=r
+  when:         checkForPatchName.rc == 1
+  tags:
+    - patch
+ 
 - name: Install Documentum Server Patch
   shell:        "{{ documentum_server_patch.media.tmpdir }}/patch.bin LAX_VM {{ documentum_server_patch.java_home }}/jre/bin/java -r response.properties -i Silent -DUSER_SELECTED_PATCH_ZIP_FILE={{ documentum_server_patch.media.targz }}"
   become:       true
