@@ -1,0 +1,34 @@
+---
+- name: Add etc/services entries for Documentum Repository {{ documentum_repository.name}}
+  lineinfile:
+    path:  /etc/services
+    line:  "{{ item }}"
+  loop:
+    - "{{ documentum_repository.name}}      60010/tcp               # Documentum Repository"
+    - "{{ documentum_repository.name}}_s    60011/tcp               # Documentum Repository Secure"
+
+- name: Create Documentum Repository response file 
+  template: 
+    dest:   "{{ documentum_server.documentum }}/config.repository.properties" 
+    src:    linux_config.properties
+    owner:  "{{ documentum_server.user }}"
+    group:  "{{ documentum_server.group }}"
+    mode:   u=rw,g=r,o=r
+
+- name: Create Repository
+  shell:        "{{ documentum_server.dm_home }}/install/dm_launch_server_config_program.sh -f {{ documentum_server.documentum }}/config.repository.properties -r {{ documentum_server.documentum }}/response.repository.properties -i Silent"
+  become:       true
+  become_user:  "{{ documentum_server.user }}"
+  args:
+    executable: /bin/bash
+    chdir:      "{{ documentum_server.dm_home }}/install"
+    creates:    "{{ documentum_server.documentum }}/dba/dm_start_{{ documentum_repository.name}}"
+  register:     repository
+  environment:
+    DOCUMENTUM:  "{{ documentum_server.documentum }}"
+    DM_HOME:     "{{ documentum_server.dm_home }}"
+    DOCUMENTUM_SHARED: "{{ documentum_server.dctm_shared }}"
+    ORACLE_HOME: "{{ oracle.home }}"
+    ORACLE_SID:  "{{ oracle.sid }}"
+
+- debug: var=repository.stdout_lines
