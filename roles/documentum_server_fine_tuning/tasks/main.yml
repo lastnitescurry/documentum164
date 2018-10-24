@@ -1,16 +1,23 @@
 ---
 - name: LOGGING - Set ISO8601 date and time format in log4j.properties files see find $DOCUMENTUM -name log4j.properties -print
   replace:
-    replace: "%d{ISO8601}"
+    replace: "ISO8601"
     path:    "{{ item.path }}"
     regexp:  "{{ item.regexp }}"
   loop:
-    - { regexp: '%d{ABSOLUTE}', path: '{{ documentum_server.documentum }}/config/log4j.properties' }
-    - { regexp: '%d{ABSOLUTE}', path: '{{ documentum_server.dm_home }}/install/composer/ComposerHeadless/plugins/com.emc.ide.external.dfc_1.0.0/documentum.config/log4j.properties' }
-    - { regexp: '%d{ABSOLUTE}', path: '{{ documentum_server.jms.dir }}/deployments/ServerApps.ear/APP-INF/classes/log4j.properties' }
-    - { regexp: '%d{yyyy-MM-dd HH:mm:ss.SSS}', path: '{{ documentum_server.jms.dir }}/deployments/ServerApps.ear/OTDSAuthentication.war/WEB-INF/classes/log4j.properties' }
-    - { regexp: '%d{yyyy-MM-dd HH:mm:ss.SSS}', path: '{{ documentum_server.jms.dir }}/deployments/ServerApps.ear/SAMLAuthentication.war/WEB-INF/classes/log4j.properties' }
-    - { regexp: '%d', path: '{{ documentum_server.jms.dir }}/deployments/acs.ear/lib/configs.jar/log4j.properties' }
+    - { regexp: 'ABSOLUTE', path: '{{ documentum_server.documentum }}/config/log4j.properties' }
+    - { regexp: 'ABSOLUTE', path: '{{ documentum_server.dm_home }}/install/composer/ComposerHeadless/plugins/com.emc.ide.external.dfc_1.0.0/documentum.config/log4j.properties' }
+    - { regexp: 'ABSOLUTE', path: '{{ documentum_server.jms.dir }}/deployments/ServerApps.ear/APP-INF/classes/log4j.properties' }
+    - { regexp: 'yyyy-MM-dd HH:mm:ss.SSS', path: '{{ documentum_server.jms.dir }}/deployments/ServerApps.ear/OTDSAuthentication.war/WEB-INF/classes/log4j.properties' }
+    - { regexp: 'yyyy-MM-dd HH:mm:ss.SSS', path: '{{ documentum_server.jms.dir }}/deployments/ServerApps.ear/SAMLAuthentication.war/WEB-INF/classes/log4j.properties' }
+
+- name: LOGGING - Set ISO8601 date and time format in log4j.properties files see find $DOCUMENTUM -name log4j.properties -print
+  replace:
+    replace: "%d{ISO8601} %5p"
+    path:    "{{ item.path }}"
+    regexp:  "{{ item.regexp }}"
+  loop:
+    - { regexp: '%d %5p', path: '{{ documentum_server.jms.dir }}/deployments/acs.ear/lib/configs.jar/log4j.properties' }
 
 - name: LOGGING - FIX path defect in Headless Composer logging... perhaps not required.. appears will be configured later
   replace:

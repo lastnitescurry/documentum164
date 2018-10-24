@@ -55,6 +55,9 @@ all:
         zip:        /media/software/Documentum/D164/CS_16.4.0040.0057_linux_ora_P04.tar.gz
         tar:        /tmp/documentum_server_patch/CS_16.4.0040.0057_linux_ora_P04.tar
         targz:      CS_16.4.0040.0057_linux_ora.tar.gz
+    documentum_repository:
+      name:         farrengold
+      id:           2018123
 
 #
 # https://github.com/ansible/ansible/blob/devel/examples/hosts.yaml

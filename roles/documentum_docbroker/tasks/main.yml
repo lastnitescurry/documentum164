@@ -1,4 +1,12 @@
 ---
+- name: Add etc/services entries for Documentum Repository {{ documentum_repository.name}}
+  lineinfile:
+    path:  /etc/services
+    line:  "{{ item }}"
+  loop:
+    - "{{ documentum_repository.name}}      60000/tcp               # Documentum Docbroker"
+    - "{{ documentum_repository.name}}_s    60001/tcp               # Documentum Docbroker Secure"
+
 - name: Create Documentum Docbroker response file 
   template: 
     dest:   "{{ documentum_server.documentum }}/config.docbroker.properties" 
