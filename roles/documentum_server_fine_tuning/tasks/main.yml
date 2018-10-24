@@ -1,0 +1,51 @@
+---
+- name: LOGGING - Set ISO8601 date and time format in log4j.properties files see find $DOCUMENTUM -name log4j.properties -print
+  replace:
+    replace: "%d{ISO8601}"
+    path:    "{{ item.path }}"
+    regexp:  "{{ item.regexp }}"
+  loop:
+    - { regexp: '%d{ABSOLUTE}', path: '{{ documentum_server.documentum }}/config/log4j.properties' }
+    - { regexp: '%d{ABSOLUTE}', path: '{{ documentum_server.dm_home }}/install/composer/ComposerHeadless/plugins/com.emc.ide.external.dfc_1.0.0/documentum.config/log4j.properties' }
+    - { regexp: '%d{ABSOLUTE}', path: '{{ documentum_server.jms.dir }}/deployments/ServerApps.ear/APP-INF/classes/log4j.properties' }
+    - { regexp: '%d{yyyy-MM-dd HH:mm:ss.SSS}', path: '{{ documentum_server.jms.dir }}/deployments/ServerApps.ear/OTDSAuthentication.war/WEB-INF/classes/log4j.properties' }
+    - { regexp: '%d{yyyy-MM-dd HH:mm:ss.SSS}', path: '{{ documentum_server.jms.dir }}/deployments/ServerApps.ear/SAMLAuthentication.war/WEB-INF/classes/log4j.properties' }
+    - { regexp: '%d', path: '{{ documentum_server.jms.dir }}/deployments/acs.ear/lib/configs.jar/log4j.properties' }
+
+- name: LOGGING - FIX path defect in Headless Composer logging... perhaps not required.. appears will be configured later
+  replace:
+    replace: "{{ documentum_server.documentum }}"
+    path:    "{{ item.path }}"
+    regexp:  "{{ item.regexp }}"
+  loop:
+    - { regexp: 'C\\:/Documentum', path: '{{ documentum_server.dm_home }}/install/composer/ComposerHeadless/plugins/com.emc.ide.external.dfc_1.0.0/documentum.config/log4j.properties' }
+
+- name: DFC Clients - define unique names see find $DOCUMENTUM -name dfc.properties -print
+  lineinfile:
+    path:  "{{ item.path }}"
+    line:  "{{ item.line }}"
+  loop:
+    - { line: 'dfc.name=DocumentumServer', path: '{{ documentum_server.documentum }}/config/dfc.properties' }
+    - { line: 'dfc.name=HeadlessComposer', path: '{{ documentum_server.dm_home }}/install/composer/ComposerHeadless/plugins/com.emc.ide.external.dfc_1.0.0/documentum.config/dfc.properties' }
+    - { line: 'dfc.name=ServerApps.ear', path: '{{ documentum_server.jms.dir }}/deployments/ServerApps.ear/APP-INF/classes/dfc.properties'  }
+    - { line: 'dfc.name=acs.ear', path: '{{ documentum_server.jms.dir }}/deployments/acs.ear/lib/configs.jar/dfc.properties'  }
+
+- name: DFC Clients - move server dfc.data.dir into system temp
+  replace:
+    replace: "dfc.data.dir=${java.io.tmpdir}/dfcClient_${dfc.name}"
+    path:    "{{ documentum_server.documentum }}/config/log4j.properties"
+    regexp:  "dfc.data.dir={{ documentum_server.documentum }}"
+
+- name: DFC Clients - remove dfc.cache.dir from ServerApps.ear
+  lineinfile:
+    line:    "dfc.cache.dir=${dfc.data.dir}/cache/methodserver_cache"
+    path:    "{{ documentum_server.jms.dir }}/deployments/ServerApps.ear/APP-INF/classes/dfc.properties"
+    state:   absent
+
+- name: DFC Clients - move JMS applications dfc.data.dir into JBOSS temp
+  lineinfile:
+    path:  "{{ item.path }}"
+    line:  "{{ item.line }}"
+  loop:
+    - { line: 'dfc.data.dir=${jboss.server.temp.dir}/dfcClients/${dfc.name}', path: '{{ documentum_server.jms.dir }}/deployments/ServerApps.ear/APP-INF/classes/dfc.properties'  }
+    - { line: 'dfc.data.dir=${jboss.server.temp.dir}/dfcClients/${dfc.name}', path: '{{ documentum_server.jms.dir }}/deployments/acs.ear/lib/configs.jar/dfc.properties'  }
