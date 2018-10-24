@@ -1,0 +1,6 @@
+---
+- name: Remove pesky name resoultion to 127.0.0.1 
+  lineinfile:
+    line:    "127.0.0.1	{{ ansible_hostname }}	{{ ansible_hostname }}"
+    path:    /etc/hosts
+    state:   absent
