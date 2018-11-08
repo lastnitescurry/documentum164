@@ -23,6 +23,10 @@
   notify:
     - set-password-documentum
 
+# Ideally I would let the notify task take care of this, but handler is not run if run failure and repository create fails if password not set.
+- name: FORCE set password for Documentum user {{ documentum_server.user }}
+  shell: echo vagrant|passwd --stdin {{ documentum_server.user }}
+
 - name: Documentum Server install location
   file: 
     path:     "{{ item }}"
@@ -91,7 +95,3 @@
     executable: /bin/bash
     chdir:      "{{ documentum_server.media.tmpdir }}"
     creates:    "{{ documentum_server.dm_home }}/version.txt"
-
-# STRANGE... why not working in notify... perhaps I need to review how I check if the patch is installed... 
-#- name: FORCE set password for Documentum user {{ documentum_server.user }}
-#  shell: echo vagrant|passwd --stdin {{ documentum_server.user }}

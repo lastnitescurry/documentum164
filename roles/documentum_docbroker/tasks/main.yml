@@ -1,11 +1,20 @@
 ---
+- name: Remove existing 1490 entry
+  lineinfile:
+    path:  /etc/services
+    line:  "{{ item }}"
+    state: absent
+  loop:
+    - "insitu-conf     1490/tcp                # insitu-conf"
+    - "insitu-conf     1490/udp                # insitu-conf"
+
 - name: Add etc/services entries for Documentum Repository {{ documentum_repository.name}}
   lineinfile:
     path:  /etc/services
     line:  "{{ item }}"
   loop:
-    - "{{ documentum_repository.name}}      60000/tcp               # Documentum Docbroker"
-    - "{{ documentum_repository.name}}_s    60001/tcp               # Documentum Docbroker Secure"
+    - "dmdocbroker_s     1490/tcp                # dmdocbroker Secure"
+    - "dmdocbroker_s     1490/udp                # dmdocbroker Secure"
 
 - name: Create Documentum Docbroker response file 
   template: 

@@ -7,4 +7,4 @@ export KEEP_TEMP_FILE=true
 
 cd {{ documentum_server.media.tmpdir }}
 chmod u+x {{ documentum_server.media.tmpdir }}/serverSetup.bin
-{{ documentum_server.media.tmpdir }}/serverSetup.bin -r response.cs.properties -i Silent -DSERVER.DOCUMENTUM={{ documentum_server.documentum }} -DAPPSERVER.SERVER_HTTP_PORT={{ documentum_server.jms.port }} -DAPPSERVER.SECURE.PASSWORD={{ lookup('password', 'credentials/documentum_server_jms.txt') }}
+{{ documentum_server.media.tmpdir }}/serverSetup.bin -r response.cs.properties -i Silent -DSERVER.DOCUMENTUM={{ documentum_server.documentum }} -DAPPSERVER.SERVER_HTTP_PORT={{ documentum_server.jms.port }} -DAPPSERVER.SECURE.PASSWORD={{ lookup('password', 'credentials/documentum_server_jms.txt chars=ascii_letters,digits,hexdigits') }}

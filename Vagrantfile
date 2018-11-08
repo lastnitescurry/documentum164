@@ -13,7 +13,7 @@ servers.each do |server|
   allnodeshostsresolution = allnodeshostsresolution + "\n" + server["ip"] + "  " + server["name"]  + "  " + server["name"]  + ".fg.ie"
 end
 allnodeshostsresolution = "cat <<EOT >> /etc/hosts #{allnodeshostsresolution}\nEOT"
-puts "#{allnodeshostsresolution}"
+#puts "#{allnodeshostsresolution}"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 

@@ -9,6 +9,9 @@
     software:
        local:   D:/Software
        remote:  /media/software
+  provision_shell:
+    etc_hosts_loopback_address_fix:
+      inline:   sed -i '1d' /etc/hosts
 
 - name: documentum
   box:  lastnitescurry/centos7
@@ -20,6 +23,9 @@
     software:
        local:   D:/Software
        remote:  /media/software
+  provision_shell:
+    etc_hosts_loopback_address_fix:
+      inline:   sed -i '1d' /etc/hosts
 
 - name: applications
   box:  lastnitescurry/centos7
@@ -30,6 +36,9 @@
     software:
        local:   D:/Software
        remote:  /media/software
+  provision_shell:
+    etc_hosts_loopback_address_fix:
+      inline:   sed -i '1d' /etc/hosts
 
 - name: ansible
   box:  lastnitescurry/centos7
@@ -44,5 +53,7 @@
        local:   D:/Software
        remote:  /media/software
   provision_shell:
+    etc_hosts_loopback_address_fix:
+      inline:   sed -i '1d' /etc/hosts
     ssh-keygen:
       inline:   ssh-keygen -q -t ecdsa -b 521 -f ~/.ssh/id_ecdsa -N ""

@@ -1,0 +1,5 @@
+---
+- hosts: documentum
+  become: true
+  roles:
+  - documentum_repository

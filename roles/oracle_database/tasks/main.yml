@@ -16,6 +16,6 @@
 
 - name: Copy server tnsames.ora to local for later use on Documentum servers
   fetch: 
-    dest:  "{{ roles_tmp }}/tnsnames.ora"
+    dest:  "{{ tmp_dir }}/tnsnames.ora"
     src:   "{{ oracle.home }}/network/admin/tnsnames.ora"
     flat: yes

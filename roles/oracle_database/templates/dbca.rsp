@@ -286,7 +286,7 @@ TEMPLATENAME = "General_Purpose.dbc"
 # Mandatory     : Yes
 #-----------------------------------------------------------------------------
 #SYSPASSWORD = "password"
-SYSPASSWORD = {{ lookup('password', 'credentials/oracle_database.txt') }}
+SYSPASSWORD = {{ lookup('password', 'credentials/oracle_database.txt chars=ascii_letters,digits,hexdigits') }}
 
 #-----------------------------------------------------------------------------
 # Name          : SYSTEMPASSWORD
@@ -297,7 +297,7 @@ SYSPASSWORD = {{ lookup('password', 'credentials/oracle_database.txt') }}
 # Mandatory     : Yes
 #-----------------------------------------------------------------------------
 #SYSTEMPASSWORD = "password"
-SYSTEMPASSWORD = {{ lookup('password', 'credentials/oracle_database.txt') }}
+SYSTEMPASSWORD = {{ lookup('password', 'credentials/oracle_database.txt chars=ascii_letters,digits,hexdigits') }}
 
 #-----------------------------------------------------------------------------
 # Name          : SERVICEUSERPASSWORD

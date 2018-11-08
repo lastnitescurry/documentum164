@@ -1,0 +1,31 @@
+---
+- name: Entropy in RHEL based cloud instances - rngd service
+  yum: 
+    name:  "{{ packages }}"
+  vars:
+    packages:
+    - rng-tools
+
+- name: Directory to override rndg systemd configuration
+  file: 
+    path:    /etc/systemd/system/rngd.d
+    state:   directory
+    recurse: yes
+    owner:   root
+    group:   root
+    mode:    u=rwx,g=rx,o=rx
+
+- name: File to override rndg systemd configuration 
+  template: 
+    dest:   /etc/systemd/system/rngd.d/customexec.conf 
+    src:    customexec.conf
+    owner:  root
+    group:  root
+    mode:   u=rwx,g=rx,o=rx
+
+- name: restart service rngd, also issue daemon-reload to pick up config changes
+  systemd:
+    name:          rngd
+    daemon_reload: yes
+    enabled:       yes
+    state:         restarted

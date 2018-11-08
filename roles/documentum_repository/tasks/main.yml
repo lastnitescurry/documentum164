@@ -4,19 +4,19 @@
     path:  /etc/services
     line:  "{{ item }}"
   loop:
-    - "{{ documentum_repository.name}}      60010/tcp               # Documentum Repository"
-    - "{{ documentum_repository.name}}_s    60011/tcp               # Documentum Repository Secure"
+    - "{{ documentum_repository.name}}      {{ documentum_repository.port}}/tcp               # Documentum Repository {{ documentum_repository.name}}"
+    - "{{ documentum_repository.name}}_s    {{ documentum_repository.port_s}}/tcp             # Documentum Repository {{ documentum_repository.name}} Secure"
 
 - name: Create Documentum Repository response file 
   template: 
-    dest:   "{{ documentum_server.documentum }}/config.repository.properties" 
+    dest:   "{{ documentum_server.documentum }}/config.repository.{{ documentum_repository.name}}.properties" 
     src:    linux_config.properties
     owner:  "{{ documentum_server.user }}"
     group:  "{{ documentum_server.group }}"
     mode:   u=rw,g=r,o=r
 
 - name: Create Repository
-  shell:        "{{ documentum_server.dm_home }}/install/dm_launch_server_config_program.sh -f {{ documentum_server.documentum }}/config.repository.properties -r {{ documentum_server.documentum }}/response.repository.properties -i Silent"
+  shell:        "{{ documentum_server.dm_home }}/install/dm_launch_server_config_program.sh -f {{ documentum_server.documentum }}/config.repository.{{ documentum_repository.name}}.properties -r {{ documentum_server.documentum }}/response.repository.{{ documentum_repository.name}}.properties -i Silent"
   become:       true
   become_user:  "{{ documentum_server.user }}"
   args:

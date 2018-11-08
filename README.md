@@ -12,6 +12,7 @@ Documentum 16.4 on Centos
 
 #### WORKAROUND Vagrant problem. Prevent hostname from binding to the loopback address
 - https://github.com/hashicorp/vagrant/issues/7263
+- Now done by Vagrant Shell provisioner
 
     sudo -i    
     sed -i '1d' /etc/hosts
@@ -41,7 +42,7 @@ and setup SSH
 
 ##### Ansible - Run playbook
     cd /vagrant
-    ansible-playbook playbook.yml
+    ansible-playbook 001PlaySetupInitalSoftware.yml
     
 ##### Ansible - Run tagged items in playbook 
     cd /vagrant
