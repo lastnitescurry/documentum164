@@ -16,7 +16,7 @@
     mode:   u=rw,g=r,o=r
 
 - name: Create Repository
-  shell:        "{{ documentum_server.dm_home }}/install/dm_launch_server_config_program.sh -f {{ documentum_server.documentum }}/config.repository.{{ documentum_repository.name}}.properties -r {{ documentum_server.documentum }}/response.repository.{{ documentum_repository.name}}.properties -i Silent"
+  shell:        "{{ documentum_server.dm_home }}/install/dm_launch_server_config_program.sh -f {{ documentum_server.documentum }}/config.repository.{{ documentum_repository.name}}.properties -r {{ documentum_server.documentum }}/response.repository.{{ documentum_repository.name}}.properties -i Silent -DLOG_LEVEL=DEBUG -DKEEP_TEMP_FILE=true"
   become:       true
   become_user:  "{{ documentum_server.user }}"
   args:
