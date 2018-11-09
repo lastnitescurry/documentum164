@@ -56,12 +56,12 @@ all:
         tar:        /tmp/documentum_server_patch/CS_16.4.0040.0057_linux_ora_P04.tar
         targz:      CS_16.4.0040.0057_linux_ora.tar.gz
     documentum_repository:
-#      name:         farrengold
-#      id:           2018123
-      name:         harold
-      id:           2018118
+      name:         farrengold
+      id:           2018123
       port:         60010
       port_s:       60011
+#      name:         harold
+#      id:           2018118
 
 #
 # https://github.com/ansible/ansible/blob/devel/examples/hosts.yaml
