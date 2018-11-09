@@ -1,0 +1,15 @@
+---
+- name: Documentum Dcobroker Service file 
+  template: 
+    dest:   /etc/systemd/system/repository.service
+    src:    repository.service
+    owner:  root
+    group:  root
+    mode:   u=rwx,g=rx,o=rx
+
+- name: Restart service repository, also issue daemon-reload to pick up config changes
+  systemd:
+    name:          repository
+    daemon_reload: yes
+    enabled:       yes
+    state:         restarted

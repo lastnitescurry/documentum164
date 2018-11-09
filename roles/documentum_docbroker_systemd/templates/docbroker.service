@@ -1,0 +1,17 @@
+[Unit]
+Description=Documentum Docbroker
+After=syslog.target network.target
+
+[Service]
+Type=forking
+User={{ documentum_server.user }}
+Group={{ documentum_server.group }}
+ExecStart={{ documentum_server.documentum }}/dba/dm_launch_Docbroker
+ExecStop={{ documentum_server.documentum }}/dba/dm_stop_Docbroker
+WorkingDirectory={{ documentum_server.documentum }}
+Restart=on-abort
+TimeoutSec=300
+SyslogIdentifier=Docbroker-%i
+
+[Install]
+WantedBy=multi-user.target

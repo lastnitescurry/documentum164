@@ -1,0 +1,15 @@
+---
+- name: Documentum Dcobroker Service file 
+  template: 
+    dest:   /etc/systemd/system/docbroker.service
+    src:    docbroker.service
+    owner:  root
+    group:  root
+    mode:   u=rwx,g=rx,o=rx
+
+- name: Restart service docbroker, also issue daemon-reload to pick up config changes
+  systemd:
+    name:          docbroker
+    daemon_reload: yes
+    enabled:       yes
+    state:         restarted

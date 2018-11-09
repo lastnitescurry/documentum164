@@ -1,0 +1,20 @@
+[Unit]
+Description=Documentum Repository {{ documentum_repository.name}}
+After=syslog.target network.target docbroker.service
+
+[Service]
+Type=forking
+User={{ documentum_server.user }}
+Group={{ documentum_server.group }}
+ExecStart={{ documentum_server.documentum }}/dba/dm_start_{{ documentum_repository.name}}
+ExecStop={{ documentum_server.documentum }}/dba/dm_shutdown_{{ documentum_repository.name}}
+WorkingDirectory={{ documentum_server.documentum }}
+Restart=on-abort
+TimeoutSec=300
+SyslogIdentifier=repository-{{ documentum_repository.name}}-%i
+Environment=LC_ALL=C
+Environment=ORACLE_HOME={{ oracle.home }}
+Environment=ORACLE_SID={{ oracle.sid }}
+
+[Install]
+WantedBy=multi-user.target
