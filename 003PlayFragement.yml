@@ -2,4 +2,6 @@
 - hosts: documentum
   become: true
   roles:
-  - documentum_repository
+  - documentum_docbroker_systemd
+  - documentum_repository_systemd
+#  - documentum_repository
