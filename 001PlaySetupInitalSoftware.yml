@@ -11,8 +11,8 @@
   roles:
   - oracle_common
   - oracle_server
-  - oracle_listner
-  - oracle_database
+  - oracle_server_listner
+  - oracle_server_database
 
 - hosts: documentum
   become: true
@@ -21,9 +21,12 @@
   - oracle_common
   - oracle_client
   - documentum_server
-#  - documentum_server_patch
+  - documentum_server_patch
   - documentum_server_fine_tuning
-  - documentum_docbroker
+  - documentum_server_docbroker
+  - documentum_server_docbroker_systemd
   - documentum_server_fine_tuning
-  - documentum_repository
+  - documentum_server_repository
   - documentum_server_fine_tuning
+  - documentum_server_repository_systemd
+  

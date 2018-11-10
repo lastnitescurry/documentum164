@@ -52,9 +52,9 @@ all:
       java_home:    /opt/documentum/java64/1.8.0_152
       media:
         tmpdir:     /tmp/documentum_server_patch
-        zip:        /media/software/Documentum/D164/CS_16.4.0040.0057_linux_ora_P04.tar.gz
-        tar:        /tmp/documentum_server_patch/CS_16.4.0040.0057_linux_ora_P04.tar
-        targz:      CS_16.4.0040.0057_linux_ora.tar.gz
+        zip:        /media/software/Documentum/D164/CS_16.4.0060.0105_linux_ora_P06.tar.gz
+        tar:        /tmp/documentum_server_patch/CS_16.4.0060.0105_linux_ora_P06.tar
+        targz:      CS_16.4.0060.0105_linux_ora.tar.gz
     documentum_repository:
       name:         farrengold
       id:           2018123
