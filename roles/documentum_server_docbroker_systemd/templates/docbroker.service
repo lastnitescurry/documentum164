@@ -12,6 +12,8 @@ WorkingDirectory={{ documentum_server.documentum }}
 Restart=on-abort
 TimeoutSec=300
 SyslogIdentifier=Docbroker-%i
+Restart=always
+RestartSec=10
 
 [Install]
 WantedBy=multi-user.target
