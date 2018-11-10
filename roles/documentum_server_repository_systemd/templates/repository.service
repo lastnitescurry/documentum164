@@ -1,6 +1,7 @@
 [Unit]
 Description=Documentum Repository {{ documentum_repository.name}}
 After=syslog.target network.target docbroker.service
+Requires=docbroker.service
 
 [Service]
 Type=forking
@@ -17,6 +18,7 @@ Environment=ORACLE_HOME={{ oracle.home }}
 Environment=ORACLE_SID={{ oracle.sid }}
 Restart=always
 RestartSec=10
+ExecStartPost=/bin/sleep 30
 
 [Install]
 WantedBy=multi-user.target

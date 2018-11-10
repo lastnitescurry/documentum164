@@ -1,0 +1,15 @@
+---
+- name: Documentum JMS Service file 
+  template: 
+    dest:   /etc/systemd/system/jms.service
+    src:    jms.service
+    owner:  root
+    group:  root
+    mode:   u=rwx,g=rx,o=rx
+
+- name: Restart service jms, also issue daemon-reload to pick up config changes
+  systemd:
+    name:          jms
+    daemon_reload: yes
+    enabled:       yes
+    state:         restarted
