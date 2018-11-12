@@ -1,7 +1,14 @@
 ---
+- hosts: database
+  become: true
+  roles:
+  - oracle_server_listner
+  - oracle_server_database
+
 - hosts: documentum
   become: true
   roles:
-  - documentum_docbroker_systemd
-  - documentum_repository_systemd
+  - documentum_server_docbroker_systemd
+  - documentum_server_repository_systemd
+  - documentum_server_jms_systemd
 #  - documentum_repository

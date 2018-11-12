@@ -4,4 +4,3 @@
 
 Using default response file from:
 	/opt/oracle/product/12.1.0.2/fgdb/assistants/netca/netca.rsp
-	

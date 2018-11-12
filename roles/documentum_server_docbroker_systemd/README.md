@@ -3,6 +3,13 @@ Try the new way to create a stop and start for Docbroker
     /opt/documentum/dba/dm_stop_Docbroker
     /opt/documentum/dba/dm_launch_Docbroker
 
+## Service status, stop and start
+    systemctl status docbroker
+
+    systemctl stop docbroker
+
+    systemctl start docbroker
+
 ## References
 - https://technet.sector19.net/linux/create-systemd-service-for-tomcat
 - https://gist.github.com/zengxs/a697d786b244d7b857d3d006213306a1

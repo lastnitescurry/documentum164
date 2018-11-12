@@ -10,15 +10,11 @@ Group={{ documentum_server.group }}
 ExecStart={{ documentum_server.documentum }}/dba/dm_start_{{ documentum_repository.name}}
 ExecStop={{ documentum_server.documentum }}/dba/dm_shutdown_{{ documentum_repository.name}}
 WorkingDirectory={{ documentum_server.documentum }}
-Restart=on-abort
 TimeoutSec=300
 SyslogIdentifier=repository-{{ documentum_repository.name}}-%i
 Environment=LC_ALL=C
 Environment=ORACLE_HOME={{ oracle.home }}
 Environment=ORACLE_SID={{ oracle.sid }}
-Restart=always
-RestartSec=10
-ExecStartPost=/bin/sleep 30
 
 [Install]
 WantedBy=multi-user.target

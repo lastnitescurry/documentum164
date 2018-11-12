@@ -1,5 +1,5 @@
 ---
-- name: Documentum Dcobroker Service file 
+- name: Documentum Repository Service file 
   template: 
     dest:   /etc/systemd/system/repository.service
     src:    repository.service
@@ -12,4 +12,4 @@
     name:          repository
     daemon_reload: yes
     enabled:       yes
-    state:         restarted
+    state:         started
