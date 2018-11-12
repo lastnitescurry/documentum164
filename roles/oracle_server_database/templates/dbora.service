@@ -1,0 +1,17 @@
+[Unit]
+Description=Oracle Listner - https://docs.oracle.com/cd/B28359_01/server.111/b32009/strt_stp.htm#UNXAR163
+After=syslog.target network.target 
+
+[Service]
+Type=forking
+User={{ oracle.user }}
+Group={{ oracle.groups.dba }}
+ExecStart={{ oracle.home }}/bin/lsnrctl start
+ExecStop={{ oracle.home }}/bin/lsnrctl stop
+WorkingDirectory={{ oracle.home }}
+TimeoutSec=300
+SyslogIdentifier=listner-%i
+Environment=ORACLE_HOME={{ oracle.home }}
+
+[Install]
+WantedBy=multi-user.target

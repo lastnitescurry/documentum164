@@ -19,3 +19,28 @@
     dest:  "{{ tmp_dir }}/tnsnames.ora"
     src:   "{{ oracle.home }}/network/admin/tnsnames.ora"
     flat: yes
+
+- name: /etc/oratab - remove default setting to not start on host start up
+  lineinfile:
+    line:    "{{ oracle.sid}}:{{ oracle.home }}:N"
+    path:    /etc/oratab
+    state:   absent
+
+- name: /etc/oratab - Set database to start on host start up
+  lineinfile:
+    line:    "{{ oracle.sid}}:{{ oracle.home }}:Y"
+    path:    /etc/oratab
+
+- name: Oracle dbora Service file 
+  template: 
+    dest:   /etc/systemd/system/dbora.service
+    src:    dbora.service
+    owner:  root
+    group:  root
+    mode:   u=rwx,g=rx,o=rx
+
+- name: Enable the dbora service, also issue daemon-reload to pick up config changes
+  systemd:
+    name:          dbora
+    daemon_reload: yes
+    enabled:       yes
