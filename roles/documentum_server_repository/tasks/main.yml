@@ -32,3 +32,25 @@
     ORACLE_SID:  "{{ oracle.sid }}"
 
 - debug: var=repository.stdout_lines
+
+- name: Repository server.ini - disable IP V6
+  lineinfile:
+    line:    "ip_mode = V4ONLY"
+    path:    "{{ documentum_server.documentum }}/dba/config/{{ documentum_repository.name}}/server.ini"
+    state:   present
+    insertafter: "enforce_four_digit_year = T"
+
+- name: Stop Repository after first creation - reconfigure server.ini and let systemd take ownership
+  shell:        "{{ documentum_server.documentum }}/dba/dm_shutdown_{{ documentum_repository.name}}"
+  become:       true
+  become_user:  "{{ documentum_server.user }}"
+  args:
+    executable: /bin/bash
+    chdir:      "{{ documentum_server.dm_home }}"
+  environment:
+    DOCUMENTUM:  "{{ documentum_server.documentum }}"
+    DM_HOME:     "{{ documentum_server.dm_home }}"
+    DOCUMENTUM_SHARED: "{{ documentum_server.dctm_shared }}"
+    ORACLE_HOME: "{{ oracle.home }}"
+    ORACLE_SID:  "{{ oracle.sid }}"
+  when: repository is changed

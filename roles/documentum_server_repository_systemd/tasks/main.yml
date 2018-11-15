@@ -7,7 +7,7 @@
     group:  root
     mode:   u=rwx,g=rx,o=rx
 
-- name: Restart service repository, also issue daemon-reload to pick up config changes
+- name: Documentum Repository Service - start if not running
   systemd:
     name:          repository
     daemon_reload: yes

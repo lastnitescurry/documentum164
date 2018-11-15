@@ -29,4 +29,4 @@
   - documentum_server_repository
   - documentum_server_fine_tuning
   - documentum_server_repository_systemd
-  
+  - documentum_server_jms_systemd

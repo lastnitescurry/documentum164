@@ -1,6 +1,6 @@
 [Unit]
 Description=Documentum Server JMS Service
-After=syslog.target network.target
+After=syslog.target network.target repository.service
 Requires=repository.service
 
 [Service]
@@ -9,10 +9,10 @@ User={{ documentum_server.user }}
 Group={{ documentum_server.group }}
 ExecStart={{ documentum_server.jms.dir }}/../startMethodServer.sh
 ExecStop={{ documentum_server.jms.dir }}/../stopMethodServer.sh
-WorkingDirectory={{ documentum_server.jms.dir }}/..
-TimeoutSec=300
+WorkingDirectory={{ documentum_server.jms.dir }}/tmp
+TimeoutSec=600
 TimeoutStartSec=10
-SyslogIdentifier=jms-%i
+SyslogIdentifier=documentum-server-jms-%i
 
 [Install]
 WantedBy=multi-user.target

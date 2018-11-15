@@ -7,9 +7,9 @@
     group:  root
     mode:   u=rwx,g=rx,o=rx
 
-- name: Restart service jms, also issue daemon-reload to pick up config changes
+- name: Documentum Server JMS Service - enable and start if not running
   systemd:
     name:          jms
     daemon_reload: yes
     enabled:       yes
-#    state:         restarted
+    state:         started

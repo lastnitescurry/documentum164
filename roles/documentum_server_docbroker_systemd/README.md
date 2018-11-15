@@ -14,11 +14,12 @@ Try the new way to create a stop and start for Docbroker
 - https://technet.sector19.net/linux/create-systemd-service-for-tomcat
 - https://gist.github.com/zengxs/a697d786b244d7b857d3d006213306a1
 
+#### 10.6. CREATING AND MODIFYING SYSTEMD UNIT FILES
+- https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-unit_files#ftn.idp25569112
+
 #### delays between stop, restart and start of another process
 - https://unix.stackexchange.com/questions/260973/adding-delay-between-stop-and-start-of-a-process-in-systemd
-- https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/sect-managing_services_with_systemd-unit_files#ftn.idp25569112
 - https://stackoverflow.com/questions/43001223/how-to-ensure-that-there-is-a-delay-before-a-service-is-started-in-systemd
-
 
 #### misc
 
@@ -31,3 +32,6 @@ Try the new way to create a stop and start for Docbroker
 - http://www.linux-magazine.com/Issues/2017/200/Tutorials-Systemd
 - https://dacurry-tns.github.io/deploying-apereo-cas/setup_tomcat_configure-systemd-to-start-tomcat.html
 - https://linuxize.com/post/how-to-install-tomcat-8-5-on-centos-7
+
+##### reboot host
+- https://www.certdepot.net/rhel7-boot-reboot-shut-system-normally
