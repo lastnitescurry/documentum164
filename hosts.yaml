@@ -47,7 +47,7 @@ all:
         port:       9090
         dir:        /opt/documentum/wildfly9.0.1/server/DctmServer_MethodServer
     documentum_server_patch:
-      version:      16.4.0040.0057
+      version:      16.4.0060.0105
       info:         /opt/documentum/patch/patch-info.xml
       java_home:    /opt/documentum/java64/1.8.0_152
       media:
