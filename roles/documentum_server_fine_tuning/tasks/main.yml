@@ -56,3 +56,9 @@
   loop:
     - { line: 'dfc.data.dir=${jboss.server.temp.dir}/dfcClients/${dfc.name}', path: '{{ documentum_server.jms.dir }}/deployments/ServerApps.ear/APP-INF/classes/dfc.properties'  }
     - { line: 'dfc.data.dir=${jboss.server.temp.dir}/dfcClients/${dfc.name}', path: '{{ documentum_server.jms.dir }}/deployments/acs.ear/lib/configs.jar/dfc.properties'  }
+
+- name: Reduce inital memory used by JMS to 256m
+  replace:
+    replace: "Xms256m"
+    path:    "{{ documentum_server.jms.dir }}/../startMethodServer.sh"
+    regexp:  "Xms1024m"
