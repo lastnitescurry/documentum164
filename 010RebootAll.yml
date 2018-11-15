@@ -1,0 +1,6 @@
+---
+- hosts: database,documentum
+  become: true
+  tasks:
+  - name: Reboot the server and wait for it to come back up.
+    reboot:
