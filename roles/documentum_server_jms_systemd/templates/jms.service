@@ -11,7 +11,7 @@ ExecStart={{ documentum_server.jms.dir }}/../startMethodServer.sh
 ExecStop={{ documentum_server.jms.dir }}/../stopMethodServer.sh
 WorkingDirectory={{ documentum_server.documentum }}/temp
 TimeoutSec=600
-TimeoutStartSec=10
+TimeoutStartSec=600
 SyslogIdentifier=documentum-server-jms-%i
 
 [Install]
