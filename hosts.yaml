@@ -62,6 +62,17 @@ all:
       port_s:       60011
 #      name:         harold
 #      id:           2018118
+    documentum_administrator:
+      version:      16.4
+      app:          da.war
+      dir:          /opt/documentum/wildfly9.0.1/server/DctmServer_MethodServer/deployments
+      media:
+        zip:        /media/software/Documentum/D164/da.war
+    documentum_administrator_patch:
+      version:      16.4.0070.0016
+      info:         /opt/documentum/wildfly9.0.1/server/DctmServer_MethodServer/deployments/da.war/version.txt
+      media:
+        zip:        /media/software/Documentum/D164/DA_16.4.0070.0016.zip
 
 #
 # https://github.com/ansible/ansible/blob/devel/examples/hosts.yaml

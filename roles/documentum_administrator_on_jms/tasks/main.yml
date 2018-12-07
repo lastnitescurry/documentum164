@@ -1,0 +1,80 @@
+---
+- name: Create Documentum Administrator directory
+  file:
+    dest:  "{{ documentum_administrator.dir }}/{{ documentum_administrator.app }}"
+    owner: "{{ documentum_server.user }}"
+    group: "{{ documentum_server.group }}"
+    state: directory
+
+- name: Unpack Documentum Administrator media {{ documentum_administrator.media.zip }}
+  unarchive:
+    src:        "{{ documentum_administrator.media.zip }}" 
+    dest:       "{{ documentum_administrator.dir }}/{{ documentum_administrator.app }}"
+    creates:    "{{ documentum_administrator.dir }}/{{ documentum_administrator.app }}/version.properties" 
+    remote_src: yes
+    owner:      "{{ documentum_server.user }}"
+    group:      "{{ documentum_server.group }}"
+    mode:       u=rwx,g=rx,o=rx
+  notify:
+    - da-war-dodeploy
+
+- name: Disable UCF and WDK Plugin
+  copy:
+    src:   "{{ item }}"
+    dest:  "{{ documentum_administrator.dir }}/{{ documentum_administrator.app }}/custom/config/{{ item }}"
+    owner: "{{ documentum_server.user }}"
+    group: "{{ documentum_server.group }}"
+  loop:
+    - app_modifies_disable_drag_drop.xml
+    - app_modifies_enable_http_content_transfer.xml
+
+- name: Configure dfc.properties and log4j.properties
+  template: 
+    dest:   "{{ documentum_administrator.dir }}/{{ documentum_administrator.app }}/WEB-INF/classes/{{ item }}"
+    src:    "{{ item }}"
+    owner:  "{{ documentum_server.user }}"
+    group:  "{{ documentum_server.group }}"
+    mode:   u=rw,g=r,o=r
+  loop:
+    - dfc.properties
+    - log4j.properties
+
+- name: Check if {{ documentum_administrator_patch.version }} has been deployed
+  template: 
+    dest:    "{{ documentum_administrator.dir }}/{{ documentum_administrator.app }}/version.txt"
+    src:     version.txt
+    owner:   "{{ documentum_server.user }}"
+    group:   "{{ documentum_server.group }}"
+    mode:    u=rw,g=r,o=r
+  register:  presence3
+
+- debug: var=presence3
+
+- name: Unpack Documentum Administrator Patch media {{ documentum_administrator_patch.media.zip }}
+  unarchive:
+    src:        "{{ documentum_administrator_patch.media.zip }}" 
+    dest:       "{{ documentum_administrator.dir }}/{{ documentum_administrator.app }}"
+    creates:    "{{ documentum_administrator.dir }}/version.txt" 
+    remote_src: yes
+    owner:      "{{ documentum_server.user }}"
+    group:      "{{ documentum_server.group }}"
+    mode:       u=rwx,g=rx,o=rx
+  when:         presence3.changed 
+  notify:
+    - da-war-dodeploy
+
+- name: Remove unecessary files. Using HTTP file transfer
+  file:
+    dest:  "{{ documentum_administrator.dir }}/{{ documentum_administrator.app }}/{{ item }}"
+    state: absent
+  loop:
+    - wdk/contentXfer
+    - wdk/contentXfer/win-jre1.8.0_152.zip
+    - wdk/native
+    - wdk/extension
+    - wdk/imageviewer
+    - webcomponent/install
+    - WEB-INF/thirdparty
+    - unstripped.jar   
+  notify:
+    - da-war-dodeploy

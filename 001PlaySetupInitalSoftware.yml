@@ -22,6 +22,7 @@
   - oracle_client
   - documentum_server
   - documentum_server_patch
+  - documentum_administrator_on_jms
   - documentum_server_fine_tuning
   - documentum_server_docbroker
   - documentum_server_docbroker_systemd

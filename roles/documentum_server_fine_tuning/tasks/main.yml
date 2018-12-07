@@ -32,6 +32,7 @@
     path:  "{{ item.path }}"
     line:  "{{ item.line }}"
   loop:
+    - { line: 'dfc.diagnostics.resources.enable = false', path: '{{ documentum_server.documentum }}/config/dfc.properties' }
     - { line: 'dfc.name=DocumentumServer', path: '{{ documentum_server.documentum }}/config/dfc.properties' }
     - { line: 'dfc.name=HeadlessComposer', path: '{{ documentum_server.dm_home }}/install/composer/ComposerHeadless/plugins/com.emc.ide.external.dfc_1.0.0/documentum.config/dfc.properties' }
     - { line: 'dfc.name=ServerApps.ear', path: '{{ documentum_server.jms.dir }}/deployments/ServerApps.ear/APP-INF/classes/dfc.properties'  }

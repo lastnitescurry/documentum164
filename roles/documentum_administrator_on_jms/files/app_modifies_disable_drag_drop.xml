@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- https://knowledge.opentext.com/knowledge/cs.dll/kcs/kbarticle/view/KB10610446 -->
+<config version="1.0">
+	<scope>
+		<!-- Selective modify app xml settings rather than duplicate -->
+		<application modifies="wdk/app.xml">
+			<!-- Disable Drag and Drop -->
+
+			<replace path="dragdrop.enabled">
+				<enabled>false</enabled>
+			</replace>
+			<replace path="plugins.enhanced_plugin.initial_user_state">
+				<initial_user_state>false</initial_user_state>
+			</replace>
+
+		</application>
+	</scope>
+</config>

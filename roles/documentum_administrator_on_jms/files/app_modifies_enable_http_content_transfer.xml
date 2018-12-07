@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- https://knowledge.opentext.com/knowledge/cs.dll/kcs/kbarticle/view/KB10609293 -->
+<config version="1.0">
+	<scope>
+		<!-- Selective modify app xml settings rather than duplicate -->
+		<application modifies="wdk/app.xml">
+			<replace path="contentxfer.default-mechanism">
+				<default-mechanism>http</default-mechanism>
+			</replace>
+		</application>
+	</scope>
+</config>

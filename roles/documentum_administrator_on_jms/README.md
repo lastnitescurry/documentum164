@@ -1,0 +1,1 @@
+Deploy Documentum Administrator in internal JBoss. Seems like a waste to spin up another server just to run it.

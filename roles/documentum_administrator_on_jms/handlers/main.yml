@@ -1,0 +1,20 @@
+---
+- name: da-war-dodeploy
+  lineinfile:
+    line:   "{{ documentum_administrator.app }}"
+    dest:   "{{ documentum_administrator.dir }}/{{ documentum_administrator.app }}.dodeploy"
+    owner:  "{{ documentum_server.user }}"
+    group:  "{{ documentum_server.group }}"
+    state:  present
+    create: yes
+  register:  da_war_dodeploy
+  notify:
+    - da-war-deployed
+
+- name: da-war-deployed
+  file:
+    dest:   "{{ documentum_administrator.dir }}/{{ documentum_administrator.app }}.{{ item }}"
+    state:  absent
+  when:     da_war_dodeploy.changed 
+  loop:
+    - deployed
