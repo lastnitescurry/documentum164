@@ -1,5 +1,14 @@
 # documentum164
-Documentum 16.4 on Centos
+Documentum 16.4 Server with Repository on Centos 7.5 / 7.6. 
+
+Please note while this project could be taken and used by anyone, I am using it for my own learning of Ansible. 
+Feel free to take what you want but be sure to understand and test before using anything in production. 
+
+## CentOS 7 Vagrant Box for Oracle Virtual Box 
+See my project packer-centos-vagrant for how the CentOS 7 vagrant box is created and what software is installed by default. 
+For the most part I try to pre install as much as possible.    
+
+- https://github.com/lastnitescurry/packer-centos-vagrant
 
 ## Commands
 
