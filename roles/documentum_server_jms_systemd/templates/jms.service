@@ -4,7 +4,7 @@ After=syslog.target network.target repository.service
 Requires=repository.service
 
 [Service]
-Type=forking
+Type=simple
 User={{ documentum_server.user }}
 Group={{ documentum_server.group }}
 ExecStart={{ documentum_server.jms.dir }}/../startMethodServer.sh

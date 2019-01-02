@@ -12,5 +12,6 @@
     name:          jms
     daemon_reload: yes
     enabled:       yes
+    state:         started
 # It does not start within JBoss stability timeout.
 # But no problem on system reboot, hence will let an OS reboot solve this!!
