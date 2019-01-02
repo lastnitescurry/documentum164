@@ -21,6 +21,9 @@ Try the new way to create a stop and start for Docbroker
 - https://unix.stackexchange.com/questions/260973/adding-delay-between-stop-and-start-of-a-process-in-systemd
 - https://stackoverflow.com/questions/43001223/how-to-ensure-that-there-is-a-delay-before-a-service-is-started-in-systemd
 
+#### Tmp and logs clean with multiple pre Commands
+- https://unix.stackexchange.com/questions/348450/confused-by-execstartpre-entries-in-systemd-unit-file
+
 #### misc
 
 - https://unix.stackexchange.com/questions/418851/location-to-place-systemd-service-environmentfile-when-creating-debian-package
