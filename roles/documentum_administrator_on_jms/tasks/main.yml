@@ -43,9 +43,9 @@
   template:
     dest:    "{{ documentum_administrator.dir }}/{{ documentum_administrator.app }}/version.txt"
     src:     version.txt
+    newline_sequence: '\r\n'
     owner:   "{{ documentum_server.user }}"
     group:   "{{ documentum_server.group }}"
-    mode:    u=rw,g=r,o=r
   register:  presence3
 
 - debug: var=presence3
@@ -58,7 +58,6 @@
     remote_src: yes
     owner:      "{{ documentum_server.user }}"
     group:      "{{ documentum_server.group }}"
-    mode:       u=rwx,g=rx,o=rx
   when:         presence3.changed
   notify:
     - da-war-dodeploy
@@ -78,6 +77,12 @@
     - unstripped.jar
   notify:
     - da-war-dodeploy
+
+- name: Disable JSP tag pooling. Requires JMS restart
+  replace:
+    replace: "<jsp-config tag-pooling=\"false\"/>"
+    path:    "{{ documentum_server.jms.dir }}/configuration/standalone.xml"
+    regexp:  "<jsp-config/>"
 
 # https://wherenow.org/ansible-handlers
 - name: Flush Handlers to create dodeploy file

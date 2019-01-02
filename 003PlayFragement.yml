@@ -7,5 +7,6 @@
 #  - documentum_server_docbroker_systemd
 #  - documentum_server_repository
 #  - documentum_server_repository_systemd
+#  - documentum_server
   - documentum_administrator_on_jms
   - documentum_server_jms_systemd
