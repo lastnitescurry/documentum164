@@ -99,3 +99,11 @@
     executable: /bin/bash
     chdir:      "{{ documentum_server.media.tmpdir }}"
     creates:    "{{ documentum_server.dm_home }}/version.txt"
+
+- name: Open firewall for JMS JBOSS HTTP port
+  firewalld:
+    port:       9090/tcp
+    zone:       public
+    permanent:  true
+    state:      enabled
+    immediate:  yes
