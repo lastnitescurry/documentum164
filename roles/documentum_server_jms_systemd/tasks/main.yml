@@ -1,6 +1,6 @@
 ---
-- name: Documentum JMS Service file 
-  template: 
+- name: Documentum JMS Service file
+  template:
     dest:   /etc/systemd/system/jms.service
     src:    jms.service
     owner:  root
@@ -12,4 +12,6 @@
     name:          jms
     daemon_reload: yes
     enabled:       yes
-    state:         started
+    state:         reloaded
+# It does not start within JBoss stability timeout.
+# But no problem on system reboot, hence will let an OS reboot solve this!!

@@ -1,11 +1,13 @@
 # documentum164
-Documentum 16.4 Server with Repository on Centos 7.5 / 7.6. 
+Documentum 16.4 Server with Repository on Centos 7.5 / 7.6.
 
-Please note while this project could be taken and used by anyone, I am using it for my own learning of Ansible. 
-Feel free to take what you want but be sure to understand and test before using anything in production. 
+Please note while this project could be taken and used by anyone, I am using it for my own learning of Ansible.
+Feel free to take what you want but be sure to understand and test before using anything in production.
 
-## CentOS 7 Vagrant Box for Oracle Virtual Box 
-See my project packer-centos-vagrant for how the CentOS 7 vagrant box is created and what software is installed by default. 
+Please be warned, __I know there are bugs in this project__. However it the effort to fix, would not add increase my Ansible education!!
+
+## CentOS 7 Vagrant Box for Oracle Virtual Box
+See my project packer-centos-vagrant for how the CentOS 7 vagrant box is created and what software is installed by default.
 For the most part I try to pre install as much as possible.    
 
 - https://github.com/lastnitescurry/packer-centos-vagrant
@@ -15,6 +17,9 @@ For the most part I try to pre install as much as possible.
 ### Fire up all virtual machines
 
 	C:\Windows\System32\cmd.exe /K "cd /d f:\PublicGitHub\documentum164"
+	rmdir /s /q credentials
+	rmdir /s /q roles\tmp
+	rmdir /s /q .vagrant
 	vagrant up
 
 ### Login into Ansible host
@@ -31,7 +36,7 @@ For the most part I try to pre install as much as possible.
 and setup SSH
 #### SSH - Generate
     ssh-keygen -q -t ecdsa -b 521 -f ~/.ssh/id_ecdsa -N ""
-    
+
 #### SSH - Distribute public keys
     ssh-copy-id -i ~/.ssh/id_ecdsa vagrant@database
     ssh-copy-id -i ~/.ssh/id_ecdsa vagrant@documentum
@@ -52,15 +57,19 @@ and setup SSH
 ##### Ansible - Run playbook
     cd /vagrant
     ansible-playbook 001PlaySetupInitalSoftware.yml
-    
-##### Ansible - Run tagged items in playbook 
+
+##### Ansible - Run tagged items in playbook
     cd /vagrant
     ansible-playbook playbook.yml --tags "patch"
 
+##### Ansible - Run tagged items in playbook
+    cd /vagrant
+    ansible-playbook 010RebootAll.yml
+
 ### Tear down and destroy all virtual machines
-	
+
 	C:\Windows\System32\cmd.exe /K "cd /d f:\PublicGitHub\documentum164"
-	
+
 	vagrant destroy -f
 
 
@@ -95,7 +104,7 @@ Hopefully my contribution will be some Documentum specific install examples
 - https://github.com/hashicorp/vagrant/issues/7263
 - https://stackoverflow.com/questions/60904/how-can-i-open-a-cmd-window-in-a-specific-location
 
-### LINUX 
+### LINUX
 file system... follow well proven standards
 - https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard
 - https://linoxide.com/how-tos/change-linux-shell-prompt-with-different-colors/
