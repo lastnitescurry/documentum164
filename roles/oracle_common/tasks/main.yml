@@ -1,7 +1,7 @@
 ---
 # https://docs.oracle.com/database/121/LACLI/pre_install.htm#LACLI1283
 - name: Oracle 12c required packages
-  yum: 
+  yum:
     name:  "{{ packages }}"
   vars:
     packages:
@@ -25,7 +25,7 @@
     - libstdc++.x86_64
     - libstdc++-devel.i686
     - libstdc++-devel.x86_64
-    - libXi.i686 
+    - libXi.i686
     - libXi.x86_64
     - libXtst.i686
     - libXtst.x86_64
@@ -50,8 +50,11 @@
   notify:
     - set-password-oracle
 
+- name: Flush Handlers to set Oracle user password
+  meta: flush_handlers
+
 - name: Oracle 12c install location {{ oracle.home }}
-  file: 
+  file:
     path: "{{ oracle.home }}"
     state: directory
     recurse: yes
@@ -60,7 +63,7 @@
     mode: u=rwx,g=rx,o=rx
 
 - name: Oracle invetory file /etc/oraInst.loc
-  template: 
+  template:
     dest:  /etc/oraInst.loc
     src:   oraInst.loc
     owner: "{{ oracle.user }}"

@@ -1,6 +1,6 @@
 ---
 - name: Documentum Server required packages
-  yum: 
+  yum:
     name:  "{{ packages }}"
   vars:
     packages:
@@ -17,18 +17,22 @@
   user:
     name:  "{{ documentum_server.user }}"
     group: "{{ documentum_server.group }}"
-    groups: 
+    groups:
        - "{{ oracle.groups.dba }}"
        - "{{ oracle.groups.inventory }}"
   notify:
     - set-password-documentum
 
+# https://wherenow.org/ansible-handlers
+- name: Flush Handlers to set Documentum Install Owner password
+  meta: flush_handlers
+
 # Ideally I would let the notify task take care of this, but handler is not run if run failure and repository create fails if password not set.
-- name: FORCE set password for Documentum user {{ documentum_server.user }}
-  shell: echo vagrant|passwd --stdin {{ documentum_server.user }}
+#- name: FORCE set password for Documentum user {{ documentum_server.user }}
+#  shell: echo vagrant|passwd --stdin {{ documentum_server.user }}
 
 - name: Documentum Server install location
-  file: 
+  file:
     path:     "{{ item }}"
     state:    directory
     recurse:  no
@@ -41,13 +45,13 @@
     - "{{ documentum_server.media.tmpdir }}"
 
 - name: Documentum Server pre-installation tasks for Red Hat Enterprise Linux
-  file: 
+  file:
     path:  /usr/lib64/libsasl2.so.2
-    src:   /usr/lib64/libsasl2.so.3.0.0 
+    src:   /usr/lib64/libsasl2.so.3.0.0
     state: link
 
 - name: Documentum environment global bashrc file /etc/profile.d/documentum_server.sh
-  template: 
+  template:
     dest:   /etc/profile.d/documentum_server.sh
     src:    environment.exports.sh
     owner:  root
@@ -55,7 +59,7 @@
     mode:   u=rw,g=r,o=r
 
 - name: Documentum environment user bashrc file /home/{{ documentum_server.user }}/.bashrc
-  template: 
+  template:
     dest:   /home/{{ documentum_server.user }}/.bashrc
     src:    environment.bashrc.sh
     owner:  "{{ documentum_server.user }}"
@@ -72,15 +76,15 @@
 
 - name: Unpack Documentum Server media {{ documentum_server.media.zip }}
   unarchive:
-    src:        "{{ documentum_server.media.zip }}" 
+    src:        "{{ documentum_server.media.zip }}"
     dest:       "{{ documentum_server.media.tmpdir }}"
-    creates:    "{{ documentum_server.media.tmpdir }}/serverSetup.bin" 
+    creates:    "{{ documentum_server.media.tmpdir }}/serverSetup.bin"
     remote_src: yes
     owner:      "{{ documentum_server.user }}"
     group:      "{{ documentum_server.group }}"
 
 - name: Setup script to install Documentum Server software {{ documentum_server.media.tmpdir }}/serverSetup.sh
-  template: 
+  template:
     src:    serverSetup.sh
     dest:   "{{ documentum_server.media.tmpdir }}/serverSetup.sh"
     owner:  "{{ documentum_server.user }}"

@@ -8,9 +8,9 @@
 
 - name: Unpack Documentum Administrator media {{ documentum_administrator.media.zip }}
   unarchive:
-    src:        "{{ documentum_administrator.media.zip }}" 
+    src:        "{{ documentum_administrator.media.zip }}"
     dest:       "{{ documentum_administrator.dir }}/{{ documentum_administrator.app }}"
-    creates:    "{{ documentum_administrator.dir }}/{{ documentum_administrator.app }}/version.properties" 
+    creates:    "{{ documentum_administrator.dir }}/{{ documentum_administrator.app }}/version.properties"
     remote_src: yes
     owner:      "{{ documentum_server.user }}"
     group:      "{{ documentum_server.group }}"
@@ -29,7 +29,7 @@
     - app_modifies_enable_http_content_transfer.xml
 
 - name: Configure dfc.properties and log4j.properties
-  template: 
+  template:
     dest:   "{{ documentum_administrator.dir }}/{{ documentum_administrator.app }}/WEB-INF/classes/{{ item }}"
     src:    "{{ item }}"
     owner:  "{{ documentum_server.user }}"
@@ -40,7 +40,7 @@
     - log4j.properties
 
 - name: Check if {{ documentum_administrator_patch.version }} has been deployed
-  template: 
+  template:
     dest:    "{{ documentum_administrator.dir }}/{{ documentum_administrator.app }}/version.txt"
     src:     version.txt
     owner:   "{{ documentum_server.user }}"
@@ -52,14 +52,14 @@
 
 - name: Unpack Documentum Administrator Patch media {{ documentum_administrator_patch.media.zip }}
   unarchive:
-    src:        "{{ documentum_administrator_patch.media.zip }}" 
+    src:        "{{ documentum_administrator_patch.media.zip }}"
     dest:       "{{ documentum_administrator.dir }}/{{ documentum_administrator.app }}"
-    creates:    "{{ documentum_administrator.dir }}/version.txt" 
+    creates:    "{{ documentum_administrator.dir }}/version.txt"
     remote_src: yes
     owner:      "{{ documentum_server.user }}"
     group:      "{{ documentum_server.group }}"
     mode:       u=rwx,g=rx,o=rx
-  when:         presence3.changed 
+  when:         presence3.changed
   notify:
     - da-war-dodeploy
 
@@ -75,6 +75,10 @@
     - wdk/imageviewer
     - webcomponent/install
     - WEB-INF/thirdparty
-    - unstripped.jar   
+    - unstripped.jar
   notify:
     - da-war-dodeploy
+
+# https://wherenow.org/ansible-handlers
+- name: Flush Handlers to create dodeploy file
+  meta: flush_handlers
