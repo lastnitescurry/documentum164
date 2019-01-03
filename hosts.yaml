@@ -9,28 +9,30 @@ all:
     tmp_dir:       roles/tmp
     oracle:
       base:         /opt/oracle
-      version:      12.1.0.2
+      #version:      12.1.0.2
+      version:      12.2.0.1
       sid:          fgdb
       unqname:      fgdb
       gdbname:      fgdb.fg.ie
-      home:         /opt/oracle/product/12.1.0.2/fgdb
+      home:         /opt/oracle/product/12.2.0.1/fgdb
       inventory:    /opt/oracle/oraInventory
       user:         oracle
       groups:
         inventory:  oinstall
         dba:        dba
+        racdba:     racdba
       media:
         tmp:        /tmp
         installer:  /tmp/database
-        zip1:       /media/software/Oracle/Database/linuxamd64_12102_database_1of2.zip
-        zip2:       /media/software/Oracle/Database/linuxamd64_12102_database_2of2.zip
+        zip1:       /media/software/Oracle/Database/12.2.0.1/linuxx64_12201_database.zip
+        #zip2:       /media/software/Oracle/Database/12.1.0.2/linuxamd64_12102_database_2of2.zip
     oracle_database:
        data:        /opt/oracle/oradata/fgdb
     oracle_client:
       media:
         tmpdir:     /tmp
         installer:  /tmp/client
-        zip:        /media/software/Oracle/Database/linuxamd64_12102_client.zip
+        zip:        /media/software/Oracle/Database/12.2.0.1/linuxx64_12201_client.zip
     documentum_server:
       documentum:   /opt/documentum
       dctm_shared:  /opt/documentum/shared
@@ -39,7 +41,7 @@ all:
       user:         dmadmin
       uid:          5000
       group:        dmadmin
-      gid:          5000 
+      gid:          5000
       media:
         tmpdir:     /tmp/documentum_server
         zip:        /media/software/Documentum/D164/content_server_16.4_linux64_oracle.tar

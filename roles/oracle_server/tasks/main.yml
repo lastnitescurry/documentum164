@@ -1,6 +1,6 @@
 ---
-- name: Oracle 12c environment variables bashrc file 
-  template: 
+- name: Oracle 12c environment variables bashrc file
+  template:
     src:   environment.exports.sh
     dest:  /etc/profile.d/oracle_server.sh
     owner: root
@@ -27,28 +27,35 @@
 
 # https://docs.ansible.com/ansible/latest/user_guide/playbooks_blocks.html
 # https://docs.ansible.com/ansible/latest/modules/unarchive_module.html#unarchive-module
-- name: Unpack Oracle media
+- name: Unpack Oracle media {{ oracle.media.zip1 }}
   unarchive:
-    src:        "{{ item.zip }}" 
-    creates:    "{{ item.creates }}" 
+    src:        "{{ oracle.media.zip1 }}"
+    creates:    "{{ oracle.media.installer }}/welcome.html"
     dest:       /tmp
     remote_src: yes
     owner: "{{ oracle.user }}"
     group: "{{ oracle.groups.inventory }}"
-  loop:
-    - { zip: '{{ oracle.media.zip1 }}', creates: '{{ oracle.media.installer }}/welcome.html' }
-    - { zip: '{{ oracle.media.zip2 }}', creates: '{{ oracle.media.installer }}/stage/Components/oracle.ctx' }
 
-- name: Create response file for silent installation
-  template: 
-    src:   db_install.rsp
+- name: Unpack Oracle media {{ oracle.media.zip2 }}
+  unarchive:
+    src:        "{{ oracle.media.zip2 }}"
+    creates:    "{{ oracle.media.installer }}/stage/Components/oracle.ctx"
+    dest:       /tmp
+    remote_src: yes
+    owner: "{{ oracle.user }}"
+    group: "{{ oracle.groups.inventory }}"
+  when: oracle.media.zip2 is defined
+
+- name: Create response file for silent installation - {{ oracle.media.installer }}/db_install.{{ oracle.version }}.rsp
+  template:
+    src:   db_install.{{ oracle.version }}.rsp
     dest:  "{{ oracle.media.installer }}/db_install.rsp"
     owner: "{{ oracle.user }}"
     group: "{{ oracle.groups.inventory }}"
     mode:  u=rw,g=r,o=r
 
 - name: Run the Oracle 12c installer
-  command: "{{ oracle.media.installer }}/runInstaller -silent -ignorePrereq -ignoreSysPrereqs -waitforcompletion -responseFile {{ oracle.media.installer }}/db_install.rsp" 
+  command: "{{ oracle.media.installer }}/runInstaller -silent -ignorePrereq -ignoreSysPrereqs -waitforcompletion -responseFile {{ oracle.media.installer }}/db_install.rsp"
   args:
     chdir:     "{{ oracle.media.installer }}"
     creates:   "{{ oracle.home }}/root.sh"
@@ -56,6 +63,6 @@
   become_user: "{{ oracle.user }}"
 
 - name: Run the Oracle 12c post install root task
-  shell: "{{ oracle.home }}/root.sh" 
+  shell: "{{ oracle.home }}/root.sh"
   args:
     creates: "/etc/oratab"

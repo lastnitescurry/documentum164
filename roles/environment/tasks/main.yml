@@ -35,4 +35,9 @@
 
 - name: Report Oracle 12c media variables from host.yaml
   debug:
-    msg: "Oracle zips ({{ oracle.media.zip1 }}, {{ oracle.media.zip2 }} will be extrated into: {{ oracle.media.installer }}"
+    msg: "Oracle zip ({{ oracle.media.zip1 }} will be extrated into: {{ oracle.media.installer }}"
+
+- name: Report Oracle 12c media variables from host.yaml
+  debug:
+    msg: "Oracle zip ({{ oracle.media.zip2 }} will be extrated into: {{ oracle.media.installer }}"
+  when: oracle.media.zip2 is defined

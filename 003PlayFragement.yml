@@ -1,12 +1,16 @@
 ---
 
-- hosts: documentum
+- hosts: database
   become: true
   roles:
-#  - documentum_server_fine_tuning
-#  - documentum_server_docbroker_systemd
-#  - documentum_server_repository
-#  - documentum_server_repository_systemd
-#  - documentum_server
-  - documentum_administrator_on_jms
-  - documentum_server_jms_systemd
+  - vagrant_localhost_fix
+  - environment
+  - basic
+
+- hosts: database
+  become: true
+  roles:
+  - oracle_common
+  - oracle_server
+  - oracle_server_listner
+  - oracle_server_database

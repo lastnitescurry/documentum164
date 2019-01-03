@@ -54,9 +54,14 @@ and setup SSH
     export ANSIBLE_CONFIG=/vagrant/ansible.cfg
     echo $ANSIBLE_CONFIG
 
-##### Ansible - Run playbook
+##### Ansible - Run main playbook
     cd /vagrant
     ansible-playbook 001PlaySetupInitalSoftware.yml
+
+##### Ansible - Run fragement playbook
+Nice thing about Ansible, it is easy to extract sections into smaller pieces
+    cd /vagrant
+    ansible-playbook 003PlayFragement.yml
 
 ##### Ansible - Run tagged items in playbook
     cd /vagrant

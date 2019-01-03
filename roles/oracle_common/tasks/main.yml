@@ -41,12 +41,13 @@
   loop:
     - "{{ oracle.groups.inventory }}"
     - "{{ oracle.groups.dba }}"
+    - "{{ oracle.groups.racdba }}"
 
 - name: Oracle 12c install account {{ oracle.user }}
   user:
     name: "{{ oracle.user }}"
     group: "{{ oracle.groups.inventory }}"
-    groups: "{{ oracle.groups.dba }}"
+    groups: "{{ oracle.groups.dba }},{{ oracle.groups.racdba }}"
   notify:
     - set-password-oracle
 
