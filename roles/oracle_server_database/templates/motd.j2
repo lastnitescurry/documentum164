@@ -1,5 +1,7 @@
+####################### aide memoire #######################
 Database Status: systemctl status dbora
 Database Stop  : systemctl stop dbora
 Database Start : systemctl start dbora
 Journal Logs   : journalctl -u dbora
 SQLPLUS login  : sqlplus system/{{ lookup('password', 'credentials/oracle_database.txt chars=ascii_letters,digits,hexdigits') }}
+####################### aide memoire #######################
