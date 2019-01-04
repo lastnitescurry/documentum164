@@ -24,14 +24,6 @@
   args:
     creates:    "{{ oracle_database.data }}"
 
-# FIXME Looks like my lazy trick will not work for 12.2.0.1
-- name: Copy server tnsames.ora to local for later use on Documentum servers
-  fetch:
-    dest:  "{{ tmp_dir }}/tnsnames.ora"
-    src:   "{{ oracle.home }}/network/admin/tnsnames.ora"
-    flat: yes
-  when: oracle.version == "12.1.0.2"
-
 - name: /etc/oratab - remove default setting to not start on host start up
   lineinfile:
     line:    "{{ oracle.sid}}:{{ oracle.home }}:N"
@@ -64,3 +56,13 @@
     owner: root
     group: root
     mode:  u=rw,g=r,o=r
+
+# FIXME FLAKY Looks like my lazy trick will not work for 12.2.0.1
+# http://www.dba-oracle.com/t_create_tnsnames_ora.htm
+# Created by listner script, but this is where I would think to look for this
+- name: Copy server tnsames.ora to local for later use on Documentum servers
+  fetch:
+    dest:  "{{ tmp_dir }}/tnsnames.ora"
+    src:   "{{ oracle.home }}/network/admin/tnsnames.ora"
+    flat: yes
+#  when: oracle.version == "12.1.0.2"
