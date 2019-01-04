@@ -9,8 +9,8 @@
 
 ### Example local login
 Note password is generated on first run, see _credentials/oracle_database.txt_
- 	
-	sqlplus system/p9Sy1CkkQ1EbfJKuYLLD
+
+	sqlplus system/ED0bAxeEjTf9A0A9KVrN
 
 	sqlplus system/5E2bX4Wa0A2J8w4502q4@FGDB
 

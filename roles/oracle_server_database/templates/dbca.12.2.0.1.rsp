@@ -16,7 +16,7 @@
 ## or db administrator who owns this installation.               			##
 ##############################################################################
 #-------------------------------------------------------------------------------
-# Do not change the following system generated value. 
+# Do not change the following system generated value.
 #-------------------------------------------------------------------------------
 responseFileVersion=/oracle/assistants/rspfmt_dbca_response_schema_v12.2.0
 
@@ -29,7 +29,7 @@ responseFileVersion=/oracle/assistants/rspfmt_dbca_response_schema_v12.2.0
 # Default value : None
 # Mandatory     : Yes
 #-----------------------------------------------------------------------------
-gdbName= "{{ oracle.gdbname }}"
+gdbName={{ oracle.gdbname }}
 
 #-----------------------------------------------------------------------------
 # Name          : sid
@@ -39,7 +39,7 @@ gdbName= "{{ oracle.gdbname }}"
 # Default value : <db_name> specified in GDBNAME
 # Mandatory     : No
 #-----------------------------------------------------------------------------
-sid= "{{ oracle.sid }}"
+sid={{ oracle.sid }}
 
 #-----------------------------------------------------------------------------
 # Name          : databaseConfigType
@@ -54,7 +54,7 @@ databaseConfigType=
 #-----------------------------------------------------------------------------
 # Name          : RACOneNodeServiceName
 # Datatype      : String
-# Description   : Service is required by application to connect to RAC One 
+# Description   : Service is required by application to connect to RAC One
 #		  Node Database
 # Valid values  : Service Name
 # Default value : None
@@ -65,7 +65,7 @@ RACOneNodeServiceName=
 #-----------------------------------------------------------------------------
 # Name          : policyManaged
 # Datatype      : Boolean
-# Description   : Set to true if Database is policy managed and 
+# Description   : Set to true if Database is policy managed and
 #		  set to false if  Database is admin managed
 # Valid values  : TRUE\FALSE
 # Default value : FALSE
@@ -77,9 +77,9 @@ policyManaged=
 #-----------------------------------------------------------------------------
 # Name          : createServerPool
 # Datatype      : Boolean
-# Description   : Set to true if new server pool need to be created for database 
-#		  if this option is specified then the newly created database 
-#		  will use this newly created serverpool. 
+# Description   : Set to true if new server pool need to be created for database
+#		  if this option is specified then the newly created database
+#		  will use this newly created serverpool.
 #		  Multiple serverpoolname can not be specified for database
 # Valid values  : TRUE\FALSE
 # Default value : FALSE
@@ -90,8 +90,8 @@ createServerPool=
 #-----------------------------------------------------------------------------
 # Name          : serverPoolName
 # Datatype      : String
-# Description   : Only one serverpool name need to be specified 
-#		   if Create Server Pool option is specified. 
+# Description   : Only one serverpool name need to be specified
+#		   if Create Server Pool option is specified.
 #		   Comma-separated list of Serverpool names if db need to use
 #		   multiple Server pool
 # Valid values  : ServerPool name
@@ -115,7 +115,7 @@ cardinality=
 #-----------------------------------------------------------------------------
 # Name          : force
 # Datatype      : Boolean
-# Description   : Set to true if new server pool need to be created by force 
+# Description   : Set to true if new server pool need to be created by force
 #		  if this option is specified then the newly created serverpool
 #		  will be assigned server even if no free servers are available.
 #		  This may affect already running database.
@@ -129,10 +129,10 @@ force=
 #-----------------------------------------------------------------------------
 # Name          : pqPoolName
 # Datatype      : String
-# Description   : Only one serverpool name needs to be specified 
-#		   if create server pool option is specified. 
+# Description   : Only one serverpool name needs to be specified
+#		   if create server pool option is specified.
 #		   Comma-separated list of serverpool names if use
-#		   server pool. This is required to 
+#		   server pool. This is required to
 #                  create Parallel Query (PQ) database. Applicable to Big Cluster
 # Valid values  :  Parallel Query (PQ) pool name
 # Default value : None
@@ -144,7 +144,7 @@ pqPoolName=
 # Name          : pqCardinality
 # Datatype      : Number
 # Description   : Specify Cardinality for create server pool operation.
-#                 Applicable to Big Cluster 
+#                 Applicable to Big Cluster
 # Valid values  : any positive Integer value
 # Default value : Number of qualified nodes on cluster
 # Mandatory     : No [Required when a new serverpool need to be created]
@@ -152,9 +152,9 @@ pqPoolName=
 pqCardinality=
 
 #-----------------------------------------------------------------------------
-# Name          : createAsContainerDatabase 
+# Name          : createAsContainerDatabase
 # Datatype      : boolean
-# Description   : flag to create database as container database 
+# Description   : flag to create database as container database
 # Valid values  : Check Oracle12c Administrator's Guide
 # Default value : false
 # Mandatory     : No
@@ -172,7 +172,7 @@ createAsContainerDatabase=
 numberOfPDBs=
 
 #-----------------------------------------------------------------------------
-# Name          : pdbName 
+# Name          : pdbName
 # Datatype      : String
 # Description   : Specify the pdbname/pdbanme prefix if one or more pdb need to be created
 # Valid values  : Check Oracle12c Administrator's Guide
@@ -182,7 +182,7 @@ numberOfPDBs=
 pdbName=
 
 #-----------------------------------------------------------------------------
-# Name          : useLocalUndoForPDBs 
+# Name          : useLocalUndoForPDBs
 # Datatype      : boolean
 # Description   : Flag to create local undo tablespace for all PDB's.
 # Valid values  : TRUE\FALSE
@@ -220,7 +220,7 @@ nodelist=
 # Default value : None
 # Mandatory     : Yes
 #-----------------------------------------------------------------------------
-templateName= "General_Purpose.dbc"
+templateName=General_Purpose.dbc
 
 #-----------------------------------------------------------------------------
 # Name          : sysPassword
@@ -391,9 +391,9 @@ dvAccountManagerPassword=
 olsConfiguration=
 
 #-----------------------------------------------------------------------------
-# Name          : datafileJarLocation 
+# Name          : datafileJarLocation
 # Datatype      : String
-# Description   : Location of the data file jar 
+# Description   : Location of the data file jar
 # Valid values  : Directory containing compressed datafile jar
 # Default value : None
 # Mandatory     : No
@@ -401,7 +401,7 @@ olsConfiguration=
 datafileJarLocation=
 
 #-----------------------------------------------------------------------------
-# Name          : datafileDestination 
+# Name          : datafileDestination
 # Datatype      : String
 # Description   : Location of the data file's
 # Valid values  : Directory for all the database files
@@ -518,18 +518,18 @@ walletPassword=
 # Name          : listeners
 # Datatype      : String
 # Description   : Specifies list of listeners to register the database with.
-#		  By default the database is configured for all the listeners specified in the 
-#		  $ORACLE_HOME/network/admin/listener.ora 	
+#		  By default the database is configured for all the listeners specified in the
+#		  $ORACLE_HOME/network/admin/listener.ora
 # Valid values  : The list should be comma separated like "listener1,listener2".
 # Mandatory     : NO
 #-----------------------------------------------------------------------------
 listeners=
 
 #-----------------------------------------------------------------------------
-# Name          : variablesFile 
+# Name          : variablesFile
 # Datatype      : String
 # Description   : Location of the file containing variable value pair
-# Valid values  : A valid file-system file. The variable value pair format in this file 
+# Valid values  : A valid file-system file. The variable value pair format in this file
 #		  is <variable>=<value>. Each pair should be in a new line.
 # Default value : None
 # Mandatory     : NO
@@ -597,8 +597,8 @@ automaticMemoryManagement=
 # Name          : totalMemory
 # Datatype      : String
 # Description   : total memory in MB to allocate to Oracle
-# Valid values  : 
-# Default value : 
+# Valid values  :
+# Default value :
 # Mandatory     : NO
 #-----------------------------------------------------------------------------
 totalMemory=

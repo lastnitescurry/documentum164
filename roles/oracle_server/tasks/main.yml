@@ -46,7 +46,7 @@
     group: "{{ oracle.groups.inventory }}"
   when: oracle.media.zip2 is defined
 
-- name: Create response file for silent installation - {{ oracle.media.installer }}/db_install.{{ oracle.version }}.rsp
+- name: Create response file for silent installation - {{ oracle.media.installer }}/db_install.rsp
   template:
     src:   db_install.{{ oracle.version }}.rsp
     dest:  "{{ oracle.media.installer }}/db_install.rsp"

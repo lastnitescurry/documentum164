@@ -1,24 +1,36 @@
 ---
 - name: Create response file for silent installation
-  template: 
+  template:
     dest:  "{{ oracle.media.installer }}/dbca.rsp"
-    src:   dbca.rsp
+    src:   "dbca.{{ oracle.version }}.rsp"
     owner: "{{ oracle.user }}"
     group: "{{ oracle.groups.inventory }}"
     mode:  u=rw,g=r,o=r
 
+- name: Define Oracle 12c 12.1.0.2 database install command
+  set_fact:
+    oracle_database_create_command: "{{ oracle.home }}/bin/dbca -silent -responseFile {{ oracle.media.installer }}/dbca.rsp"
+  when: oracle.version == "12.1.0.2"
+
+- name: Define Oracle 12c 12.2.0.1 database install command
+  set_fact:
+    oracle_database_create_command: "{{ oracle.home }}/bin/dbca -createDatabase -silent -ignorePreReqs -responseFile {{ oracle.media.installer }}/dbca.rsp"
+  when: oracle.version == "12.2.0.1"
+
 - name: Create Oracle Database {{ oracle.sid }} in {{ oracle_database.data }}
-  command:     "{{ oracle.home }}/bin/dbca -silent -responseFile {{ oracle.media.installer }}/dbca.rsp"
+  command:     "{{ oracle_database_create_command }}"
   become:       true
   become_user:  "{{ oracle.user }}"
   args:
     creates:    "{{ oracle_database.data }}"
 
+# FIXME Looks like my lazy trick will not work for 12.2.0.1
 - name: Copy server tnsames.ora to local for later use on Documentum servers
-  fetch: 
+  fetch:
     dest:  "{{ tmp_dir }}/tnsnames.ora"
     src:   "{{ oracle.home }}/network/admin/tnsnames.ora"
     flat: yes
+  when: oracle.version == "12.1.0.2"
 
 - name: /etc/oratab - remove default setting to not start on host start up
   lineinfile:
@@ -31,8 +43,8 @@
     line:    "{{ oracle.sid}}:{{ oracle.home }}:Y"
     path:    /etc/oratab
 
-- name: Oracle dbora Service file 
-  template: 
+- name: Oracle dbora Service file
+  template:
     dest:   /etc/systemd/system/dbora.service
     src:    dbora.service
     owner:  root
