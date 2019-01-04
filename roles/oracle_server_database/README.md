@@ -23,4 +23,25 @@ Note password is generated on first run, see _credentials/oracle_database.txt_
     systemctl start dbora
 
 #### Message from Journal
+
     journalctl -xe
+		journalctl -u dbora.service
+
+- https://www.digitalocean.com/community/tutorials/how-to-use-journalctl-to-view-and-manipulate-systemd-logs
+
+## Message of the day
+Display environment information and useful commands to user.
+
+Simple option is static text in message of the day file.
+
+### References
+- http://blog.toracat.org/2013/04/customizing-welcome-message/
+- https://serversforhackers.com/c/customize-your-login-screen-via-linuxs-message-of-the-day-ubuntucentos
+
+### Maybe for future
+#### neofetch
+- https://github.com/dylanaraps/neofetch/wiki/Installation#fedora--rhel--centos--mageia
+- https://superuser.com/questions/1168901/dnf-copr-plugin-not-present-in-dnf-plugins-core
+
+    curl -o /etc/yum.repos.d/konimex-neofetch-epel-7.repo https://copr.fedorainfracloud.org/coprs/konimex/neofetch/repo/epel-7/konimex-neofetch-epel-7.repo
+    dnf --assumeyes install neofetch

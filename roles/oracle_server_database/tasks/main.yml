@@ -56,3 +56,11 @@
     name:          dbora
     daemon_reload: yes
     enabled:       yes
+
+- name: Create Message of day file with Oracle details
+  template:
+    src:   motd.j2
+    dest:  /etc/motd
+    owner: root
+    group: root
+    mode:  u=rw,g=r,o=r

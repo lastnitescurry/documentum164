@@ -98,6 +98,9 @@ Hopefully my contribution will be some Documentum specific install examples
 - https://www.vagrantup.com/docs/provisioning/ansible_intro.html
 - https://everythingshouldbevirtual.com/automation/ansible-using-set_facts-module/
 
+#### Ansible variables
+- http://www.mydailytutorials.com/working-ansible-variables-conditionals
+
 #### Ansible handlers
 - https://serverfault.com/questions/831880/are-ansible-handlers-defined-in-roles-ran-after-the-entire-playbook-or-the-role
 - https://wherenow.org/ansible-handlers
