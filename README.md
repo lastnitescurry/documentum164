@@ -50,18 +50,21 @@ and setup SSH
     ssh 'vagrant@ansible'
 
 #### Ansible - export ANSIBLE_CONFIG (because in world write folder)
-
     export ANSIBLE_CONFIG=/vagrant/ansible.cfg
     echo $ANSIBLE_CONFIG
 
 ##### Ansible - Run main playbook
     cd /vagrant
-    ansible-playbook 001PlaySetupInitalSoftware.yml
+    ansible-playbook doItAllPlay.yml
 
-##### Ansible - Run fragement playbook
+##### Ansible - Run Oracle Database install playbook
 Nice thing about Ansible, it is easy to extract sections into smaller pieces
+
     cd /vagrant
-    ansible-playbook 003PlayFragement.yml
+    ansible-playbook doOracleDatabasePlay.yml
+
+		cd /vagrant
+    ansible-playbook doDocumentumPlay.yml
 
 ##### Ansible - Run tagged items in playbook
     cd /vagrant
