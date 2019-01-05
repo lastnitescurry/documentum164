@@ -41,3 +41,8 @@
     ORACLE_SID:  "{{ oracle.sid }}"
 
 - debug: var=docbroker.stdout_lines
+
+- name: Start documentum-docbroker.service
+  systemd:
+    name:  documentum-docbroker
+    state: started

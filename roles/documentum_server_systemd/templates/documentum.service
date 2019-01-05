@@ -1,0 +1,14 @@
+[Unit]
+Description=Documentum Server Services.
+
+[Service]
+# http://alesnosek.com/blog/2016/12/04/controlling-a-multi-service-application-with-systemd
+# The dummy program will exit
+Type=oneshot
+# Execute a dummy program
+ExecStart=/bin/true
+# This service shall be considered active after start
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
