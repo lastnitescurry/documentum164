@@ -19,6 +19,8 @@
 *.conf     text eol=lf
 *.rsp      text eol=lf
 *.service  text eol=lf
+*.txt      text eol=lf
+*.properties  text eol=lf
 
 # Documents
 *.doc	 diff=astextplain

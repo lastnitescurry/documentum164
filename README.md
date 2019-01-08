@@ -57,12 +57,15 @@ and setup SSH
     cd /vagrant
     ansible-playbook doItAllPlay.yml
 
-##### Ansible - Run Oracle Database install playbook
+##### Ansible - Run Oracle 12c server install and Database creation playbook
 Nice thing about Ansible, it is easy to extract sections into smaller pieces
 
     cd /vagrant
     ansible-playbook doOracleDatabasePlay.yml
 
+- https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#passing-variables-on-the-command-line
+
+##### Ansible - Run Documentum install and Repository creation playbook
 		cd /vagrant
     ansible-playbook doDocumentumPlay.yml
 
