@@ -5,13 +5,15 @@ After=documentum.service
 
 [Service]
 Type=forking
-User={{ documentum_server.user }}
-Group={{ documentum_server.group }}
 ExecStart={{ documentum_server.documentum }}/dba/dm_launch_Docbroker
 ExecStop={{ documentum_server.documentum }}/dba/dm_stop_Docbroker
-WorkingDirectory={{ documentum_server.documentum }}
-TimeoutSec=30
 SyslogIdentifier=documentum-docbroker-%i
+User={{ documentum_server.user }}
+Group={{ documentum_server.group }}
+WorkingDirectory={{ documentum_server.documentum }}
+Environment=LC_ALL=C
+Environment=ORACLE_HOME={{ oracle.home }}
+Environment=ORACLE_SID={{ oracle.sid }}
 
 [Install]
 WantedBy=documentum.service

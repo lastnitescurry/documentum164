@@ -7,15 +7,15 @@ After=documentum-repository.service
 
 [Service]
 Type=simple
-User={{ documentum_server.user }}
-Group={{ documentum_server.group }}
 ExecStart={{ documentum_server.jms.dir }}/../startMethodServer.sh
 ExecStop={{ documentum_server.jms.dir }}/../stopMethodServer.sh
-WorkingDirectory={{ documentum_server.documentum }}/temp
-#WorkingDirectory={{ documentum_server.jms.dir }}/../../server
 TimeoutSec=600
 TimeoutStartSec=600
 SyslogIdentifier=documentum-jms-%i
+User={{ documentum_server.user }}
+Group={{ documentum_server.group }}
+WorkingDirectory={{ documentum_server.documentum }}/temp
+#WorkingDirectory={{ documentum_server.jms.dir }}/../../server
 
 # Remove tmp files and logs. DO NOT DO THIS IN PRODUCTION!
 ExecStartPre=-/bin/rm -rf {{ documentum_server.jms.dir }}/../felix-cache
