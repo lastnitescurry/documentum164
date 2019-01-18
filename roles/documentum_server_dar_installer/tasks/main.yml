@@ -1,0 +1,22 @@
+---
+- name: Create Dar Installer script from blog post
+  template:
+    dest:   "{{ documentum_server.documentum }}/temp"
+    src:    dar_installer_blog_post.sh
+    owner:  "{{ documentum_server.user }}"
+    group:  "{{ documentum_server.group }}"
+    mode:   u=rwx,g=r,o=r
+
+- name: Run Dar Installer script from blog post
+  shell:        "{{ documentum_server.documentum }}/temp/dar_installer_blog_post.sh"
+  become:       true
+  become_user:  "{{ documentum_server.user }}"
+  args:
+    executable: /bin/sh
+    chdir:      "{{ documentum_server.documentum }}/temp"
+  environment:
+    DOCUMENTUM:  "{{ documentum_server.documentum }}"
+    DM_HOME:     "{{ documentum_server.dm_home }}"
+    DOCUMENTUM_SHARED: "{{ documentum_server.dctm_shared }}"
+    ORACLE_HOME: "{{ oracle.home }}"
+    ORACLE_SID:  "{{ oracle.sid }}"

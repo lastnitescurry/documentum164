@@ -21,7 +21,7 @@
   - oracle_common
   - oracle_client
   - documentum_server
-  - documentum_server_patch
+#  - documentum_server_patch
   - documentum_administrator_on_jms
   - documentum_server_fine_tuning
   - documentum_server_systemd
@@ -29,3 +29,4 @@
   - documentum_server_fine_tuning
   - documentum_server_repository
   - documentum_server_fine_tuning
+  - documentum_server_dar_installer
