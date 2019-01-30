@@ -7,9 +7,9 @@
     - "{{ documentum_repository.name}}      {{ documentum_repository.port}}/tcp               # Documentum Repository {{ documentum_repository.name}}"
     - "{{ documentum_repository.name}}_s    {{ documentum_repository.port_s}}/tcp             # Documentum Repository {{ documentum_repository.name}} Secure"
 
-- name: Create Documentum Repository response file 
-  template: 
-    dest:   "{{ documentum_server.documentum }}/config.repository.{{ documentum_repository.name}}.properties" 
+- name: Create Documentum Repository response file
+  template:
+    dest:   "{{ documentum_server.documentum }}/config.repository.{{ documentum_repository.name}}.properties"
     src:    linux_config.properties
     owner:  "{{ documentum_server.user }}"
     group:  "{{ documentum_server.group }}"
@@ -54,3 +54,13 @@
     ORACLE_HOME: "{{ oracle.home }}"
     ORACLE_SID:  "{{ oracle.sid }}"
   when: repository is changed
+
+- name: Documentum Repository Service - start if not running
+  systemd:
+    name:          documentum-repository
+    state:         started
+
+- name: Documentum JMS Service - start if not running
+  systemd:
+    name:          documentum-jms
+    state:         started

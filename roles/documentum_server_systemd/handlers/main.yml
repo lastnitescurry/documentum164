@@ -1,0 +1,7 @@
+---
+- name: reload.documentum.service
+  systemd:
+    name:          documentum
+    daemon_reload: yes
+    enabled:       yes
+#    state:         started

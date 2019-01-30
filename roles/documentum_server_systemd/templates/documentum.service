@@ -1,0 +1,18 @@
+[Unit]
+Description=Documentum Server Services
+# Execute a dummy program which shall be considered active after start
+# http://alesnosek.com/blog/2016/12/04/controlling-a-multi-service-application-with-systemd
+
+[Service]
+Type=oneshot
+ExecStart=/bin/true
+RemainAfterExit=yes
+User={{ documentum_server.user }}
+Group={{ documentum_server.group }}
+WorkingDirectory={{ documentum_server.documentum }}
+Environment=LC_ALL=C
+Environment=ORACLE_HOME={{ oracle.home }}
+Environment=ORACLE_SID={{ oracle.sid }}
+
+[Install]
+WantedBy=multi-user.target

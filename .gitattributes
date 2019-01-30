@@ -1,0 +1,57 @@
+# Common settings that generally should always be used with your language specific settings
+
+# Auto detect text files and perform LF normalization
+# http://davidlaing.com/2012/09/19/customise-your-gitattributes-to-become-a-git-ninja
+# https://stackoverflow.com/questions/170961/whats-the-best-crlf-carriage-return-line-feed-handling-strategy-with-git
+# https://stackoverflow.com/questions/10418975/how-to-change-line-ending-settings
+# https://git-scm.com/docs/gitattributes#_checking-out_and_checking-in
+#
+# Credit where due:
+# https://github.com/alexkaratarakis/gitattributes
+#
+* text=auto
+
+#
+# The above will handle all files NOT found below
+#
+# Ensure UNIX scripts have correct line endings
+*.sh       text eol=lf
+*.conf     text eol=lf
+*.rsp      text eol=lf
+*.service  text eol=lf
+*.txt      text eol=lf
+*.properties  text eol=lf
+
+# Documents
+*.doc	 diff=astextplain
+*.DOC	 diff=astextplain
+*.docx diff=astextplain
+*.DOCX diff=astextplain
+*.dot  diff=astextplain
+*.DOT  diff=astextplain
+*.pdf  diff=astextplain
+*.PDF	 diff=astextplain
+*.rtf	 diff=astextplain
+*.RTF	 diff=astextplain
+*.md text
+*.adoc text
+*.textile text
+*.mustache text
+*.csv text
+*.tab text
+*.tsv text
+*.sql text
+
+# Graphics
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.tif binary
+*.tiff binary
+*.ico binary
+# SVG treated as an asset (binary) by default. If you want to treat it as text,
+# comment-out the following line and uncomment the line after.
+*.svg binary
+#*.svg text
+*.eps binary

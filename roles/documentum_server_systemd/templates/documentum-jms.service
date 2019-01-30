@@ -1,0 +1,28 @@
+[Unit]
+Description=Documentum Server JMS Service
+PartOf=documentum.service
+After=documentum.service
+After=documentum-docbroker.service
+After=documentum-repository.service
+
+[Service]
+Type=simple
+ExecStart={{ documentum_server.jms.dir }}/../startMethodServer.sh
+ExecStop={{ documentum_server.jms.dir }}/../stopMethodServer.sh
+TimeoutSec=600
+TimeoutStartSec=600
+SyslogIdentifier=documentum-jms-%i
+User={{ documentum_server.user }}
+Group={{ documentum_server.group }}
+WorkingDirectory={{ documentum_server.documentum }}/temp
+#WorkingDirectory={{ documentum_server.jms.dir }}/../../server
+
+# Remove tmp files and logs. DO NOT DO THIS IN PRODUCTION!
+ExecStartPre=-/bin/rm -rf {{ documentum_server.jms.dir }}/../felix-cache
+ExecStartPre=-/bin/rm -rf {{ documentum_server.documentum }}/temp/felix-cache
+ExecStartPre=-/bin/rm -rf {{ documentum_server.jms.dir }}/log
+ExecStartPre=-/bin/rm -rf {{ documentum_server.jms.dir }}/logs
+ExecStartPre=-/bin/rm -rf {{ documentum_server.jms.dir }}/tmp
+
+[Install]
+WantedBy=documentum.service

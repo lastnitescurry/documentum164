@@ -1,0 +1,36 @@
+---
+- name: Documentum Server Service file
+  template:
+    dest:   "/etc/systemd/system/{{ item }}"
+    src:    "{{ item }}"
+    owner:  root
+    group:  root
+    mode:   u=rwx,g=rx,o=rx
+  notify:
+    - reload.documentum.service
+  loop:
+    - documentum.service
+    - documentum-docbroker.service
+    - documentum-repository.service
+    - documentum-jms.service
+
+- name: Enable the Documentum service
+  systemd:
+    name:     "{{ item }}"
+    enabled:  yes
+  loop:
+    - documentum.service
+    - documentum-docbroker.service
+    - documentum-repository.service
+    - documentum-jms.service
+
+- name: Flush Handlers to have Documentum services restarted if there has been changes
+  meta: flush_handlers
+
+- name: Create Message of day file with Documetnum details
+  template:
+    src:   motd.j2
+    dest:  /etc/motd
+    owner: root
+    group: root
+    mode:  u=rw,g=r,o=r
